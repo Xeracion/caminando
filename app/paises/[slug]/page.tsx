@@ -24,7 +24,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const SUB_HUBS = ["Becas", "Trabajo", "Migración", "Costo de vida"];
+const SUB_HUBS: { label: string; path?: string }[] = [
+  { label: "Becas", path: "/becas" },
+  { label: "Trabajo", path: "/trabajo" },
+  { label: "Migración", path: "/migracion" },
+  { label: "Costo de vida" },
+];
 
 export default async function CountryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -59,14 +64,24 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
 
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="flex flex-wrap gap-2">
-          {SUB_HUBS.map((hub) => (
-            <span
-              key={hub}
-              className="rounded-full border border-dashed border-line-strong px-3.5 py-1.5 text-sm text-ink-muted"
-            >
-              {hub}
-            </span>
-          ))}
+          {SUB_HUBS.map((hub) =>
+            hub.path ? (
+              <Link
+                key={hub.label}
+                href={`${hub.path}?pais=${country.slug}`}
+                className="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink transition-colors hover:border-navy-light hover:text-navy-light"
+              >
+                {hub.label}
+              </Link>
+            ) : (
+              <span
+                key={hub.label}
+                className="rounded-full border border-dashed border-line-strong px-3.5 py-1.5 text-sm text-ink-muted"
+              >
+                {hub.label} · próximamente
+              </span>
+            ),
+          )}
         </div>
 
         {activeCount === 0 ? (

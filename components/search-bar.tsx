@@ -2,9 +2,9 @@ import Link from "next/link";
 import { countries } from "@/lib/data/countries";
 
 const CATEGORIES = [
-  { value: "beca", label: "Becas" },
-  { value: "trabajo", label: "Trabajo" },
-  { value: "migracion", label: "Migración" },
+  { href: "/becas", label: "Becas" },
+  { href: "/trabajo", label: "Trabajo" },
+  { href: "/migracion", label: "Migración" },
 ];
 
 /**
@@ -41,8 +41,8 @@ export function SearchBar() {
         </span>
         {CATEGORIES.map((c) => (
           <Link
-            key={c.value}
-            href={`/oportunidades?categoria=${c.value}`}
+            key={c.href}
+            href={c.href}
             className="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink transition-colors hover:border-navy-light hover:text-navy-light"
           >
             {c.label}

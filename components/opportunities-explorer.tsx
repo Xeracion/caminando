@@ -11,17 +11,30 @@ type Props = {
   initialQuery?: string;
   initialCategory?: string;
   initialCountry?: string;
+  /** Locks the explorer to one category and hides the category selector — used by /becas, /trabajo. */
+  lockedCategory?: OpportunityCategory;
 };
 
 const CATEGORIES: OpportunityCategory[] = ["beca", "trabajo", "migracion"];
+const LEVELS = ["Pregrado", "Maestría", "Doctorado"];
 
-export function OpportunitiesExplorer({ opportunities, countries, initialQuery, initialCategory, initialCountry }: Props) {
+export function OpportunitiesExplorer({
+  opportunities,
+  countries,
+  initialQuery,
+  initialCategory,
+  initialCountry,
+  lockedCategory,
+}: Props) {
   const [query, setQuery] = useState(initialQuery ?? "");
   const [category, setCategory] = useState<OpportunityCategory | "todas">(
-    CATEGORIES.includes(initialCategory as OpportunityCategory) ? (initialCategory as OpportunityCategory) : "todas",
+    lockedCategory ?? (CATEGORIES.includes(initialCategory as OpportunityCategory) ? (initialCategory as OpportunityCategory) : "todas"),
   );
   const [country, setCountry] = useState(initialCountry ?? "todos");
   const [showClosed, setShowClosed] = useState(false);
+  const [level, setLevel] = useState<string | null>(null);
+  const [visaOnly, setVisaOnly] = useState(false);
+  const [remoteOnly, setRemoteOnly] = useState(false);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -29,9 +42,12 @@ export function OpportunitiesExplorer({ opportunities, countries, initialQuery, 
       .filter((o) => (category === "todas" ? true : o.category === category))
       .filter((o) => (country === "todos" ? true : o.countrySlug === country))
       .filter((o) => (showClosed ? true : isActiveOrClosing(o)))
+      .filter((o) => (level ? (o.level ?? "").toLowerCase().includes(level.toLowerCase()) : true))
+      .filter((o) => (visaOnly ? o.visaSponsorship : true))
+      .filter((o) => (remoteOnly ? o.remote : true))
       .filter((o) => (q ? `${o.title} ${o.summary}`.toLowerCase().includes(q) : true))
       .sort((a, b) => Number(isActiveOrClosing(b)) - Number(isActiveOrClosing(a)));
-  }, [opportunities, category, country, showClosed, query]);
+  }, [opportunities, category, country, showClosed, level, visaOnly, remoteOnly, query]);
 
   return (
     <div>
@@ -45,18 +61,20 @@ export function OpportunitiesExplorer({ opportunities, countries, initialQuery, 
         />
 
         <div className="flex flex-wrap items-center gap-2">
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value as typeof category)}
-            className="rounded-lg border border-line bg-surface px-3 py-2.5 text-sm"
-          >
-            <option value="todas">Todas las categorías</option>
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {CATEGORY_LABEL[c]}
-              </option>
-            ))}
-          </select>
+          {lockedCategory ? null : (
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as typeof category)}
+              className="rounded-lg border border-line bg-surface px-3 py-2.5 text-sm"
+            >
+              <option value="todas">Todas las categorías</option>
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {CATEGORY_LABEL[c]}
+                </option>
+              ))}
+            </select>
+          )}
 
           <select
             value={country}
@@ -82,6 +100,52 @@ export function OpportunitiesExplorer({ opportunities, countries, initialQuery, 
           </label>
         </div>
       </div>
+
+      {lockedCategory === "beca" ? (
+        <div className="flex flex-wrap items-center gap-2 border-b border-line py-5">
+          <span className="mr-1 font-body text-xs font-bold uppercase tracking-[0.1em] text-ink-muted">Nivel</span>
+          <button
+            type="button"
+            onClick={() => setLevel(null)}
+            className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${level === null ? "border-navy bg-navy text-paper" : "border-line text-ink hover:border-navy-light"}`}
+          >
+            Todos
+          </button>
+          {LEVELS.map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLevel(l)}
+              className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${level === l ? "border-navy bg-navy text-paper" : "border-line text-ink hover:border-navy-light"}`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
+      {lockedCategory === "trabajo" ? (
+        <div className="flex flex-wrap items-center gap-5 border-b border-line py-5 text-sm">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={visaOnly}
+              onChange={(e) => setVisaOnly(e.target.checked)}
+              className="h-4 w-4 rounded border-line-strong"
+            />
+            Patrocina visa
+          </label>
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={remoteOnly}
+              onChange={(e) => setRemoteOnly(e.target.checked)}
+              className="h-4 w-4 rounded border-line-strong"
+            />
+            100% remoto
+          </label>
+        </div>
+      ) : null}
 
       <p className="mt-6 font-data text-sm text-ink-muted">
         {filtered.length} resultado{filtered.length === 1 ? "" : "s"}

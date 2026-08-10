@@ -3,9 +3,11 @@ import { ThemeToggle } from "./theme-toggle";
 
 const NAV = [
   { href: "/oportunidades", label: "Oportunidades" },
+  { href: "/becas", label: "Becas" },
+  { href: "/trabajo", label: "Trabajo" },
+  { href: "/migracion", label: "Migración" },
   { href: "/historias", label: "Historias" },
-  { href: "/paises/espana", label: "España" },
-  { href: "/#sobre-pam", label: "Sobre Pam" },
+  { href: "/sobre-pam", label: "Sobre Pam" },
 ];
 
 export function SiteHeader() {
@@ -16,12 +18,12 @@ export function SiteHeader() {
           Caminando<span className="text-sun-deep">.</span>lat
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="font-body text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+              className="whitespace-nowrap font-body text-sm font-medium text-ink-muted transition-colors hover:text-ink"
             >
               {item.label}
             </Link>

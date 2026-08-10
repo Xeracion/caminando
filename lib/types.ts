@@ -2,6 +2,9 @@ export type OpportunityCategory = "beca" | "trabajo" | "migracion";
 
 export type SourceTier = "A" | "B" | "C";
 
+/** Migration pathway type — how the doc groups /migracion instead of a search. */
+export type MigrationRoute = "estudio-residencia" | "trabajo-residencia" | "rentas-pasivas" | "reunificacion-familiar";
+
 export interface Country {
   slug: string;
   name: string;
@@ -25,6 +28,11 @@ export interface Opportunity {
   closingDate?: string;
   /** ISO date of the last editorial review, for evergreen migration guides. */
   lastReviewed?: string;
+  /** Only for category "trabajo". */
+  visaSponsorship?: boolean;
+  remote?: boolean;
+  /** Only for category "migracion". */
+  route?: MigrationRoute;
   sourceName: string;
   sourceTier: SourceTier;
 }
@@ -43,4 +51,18 @@ export const CATEGORY_LABEL: Record<OpportunityCategory, string> = {
   beca: "Beca",
   trabajo: "Trabajo",
   migracion: "Migración",
+};
+
+export const ROUTE_LABEL: Record<MigrationRoute, string> = {
+  "estudio-residencia": "De estudio a residencia",
+  "trabajo-residencia": "De trabajo a residencia",
+  "rentas-pasivas": "Por rentas pasivas o inversión",
+  "reunificacion-familiar": "Reunificación familiar",
+};
+
+export const ROUTE_DESCRIPTION: Record<MigrationRoute, string> = {
+  "estudio-residencia": "Empiezas con un permiso de estudios y lo encadenas hasta la residencia permanente.",
+  "trabajo-residencia": "Una oferta de empleo calificado es la puerta de entrada a un estatus migratorio estable.",
+  "rentas-pasivas": "Para quienes pueden demostrar ingresos o ahorros propios, sin necesidad de un empleador.",
+  "reunificacion-familiar": "Migras a partir de un vínculo familiar directo con alguien que ya reside en el país.",
 };

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PhotoPlaceholder } from "./photo-placeholder";
 
 export function AboutPam() {
@@ -21,6 +22,9 @@ export function AboutPam() {
             La misión es simple: que ningún latinoamericano con talento se quede sin intentarlo por no saber que la
             oportunidad ya existía.
           </p>
+          <Link href="/sobre-pam" className="mt-6 inline-block text-sm font-semibold text-paper hover:underline">
+            Conoce más sobre Pam →
+          </Link>
         </div>
       </div>
     </section>

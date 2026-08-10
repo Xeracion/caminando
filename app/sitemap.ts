@@ -4,7 +4,17 @@ import { countries } from "@/lib/data/countries";
 const SITE_URL = "https://caminando.lat";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/oportunidades", "/historias"].map((path) => ({
+  const staticRoutes = [
+    "",
+    "/oportunidades",
+    "/becas",
+    "/trabajo",
+    "/migracion",
+    "/historias",
+    "/sobre-pam",
+    "/prensa",
+    "/contacto",
+  ].map((path) => ({
     url: `${SITE_URL}${path}`,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,

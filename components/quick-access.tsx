@@ -5,19 +5,19 @@ import { isActiveOrClosing } from "@/lib/lifecycle";
 
 const ITEMS = [
   {
-    href: "/oportunidades?categoria=beca",
+    href: "/becas",
     title: "Estudiar",
     copy: "Becas de pregrado, maestría y doctorado en universidades de todo el mundo.",
     category: "beca" as const,
   },
   {
-    href: "/oportunidades?categoria=trabajo",
+    href: "/trabajo",
     title: "Trabajar",
     copy: "Empleos que patrocinan visa o aceptan candidatos remotos desde Latinoamérica.",
     category: "trabajo" as const,
   },
   {
-    href: "/oportunidades?categoria=migracion",
+    href: "/migracion",
     title: "Migrar",
     copy: "Rutas explicadas paso a paso: de estudio o trabajo a la residencia permanente.",
     category: "migracion" as const,

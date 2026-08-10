@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { countries } from "@/lib/data/countries";
 
-function ComingSoon({ label }: { label: string }) {
-  return <span className="text-ink-muted/60">{label} · próximamente</span>;
-}
-
 export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-surface">
@@ -21,17 +17,17 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/oportunidades?categoria=beca" className="hover:text-navy-light">
+                <Link href="/becas" className="hover:text-navy-light">
                   Becas
                 </Link>
               </li>
               <li>
-                <Link href="/oportunidades?categoria=trabajo" className="hover:text-navy-light">
+                <Link href="/trabajo" className="hover:text-navy-light">
                   Trabajo
                 </Link>
               </li>
               <li>
-                <Link href="/oportunidades?categoria=migracion" className="hover:text-navy-light">
+                <Link href="/migracion" className="hover:text-navy-light">
                   Migración
                 </Link>
               </li>
@@ -71,15 +67,19 @@ export function SiteFooter() {
             <h3 className="font-body text-xs font-bold uppercase tracking-[0.12em] text-ink-muted">Compañía</h3>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link href="/#sobre-pam" className="hover:text-navy-light">
+                <Link href="/sobre-pam" className="hover:text-navy-light">
                   Sobre Pam
                 </Link>
               </li>
               <li>
-                <ComingSoon label="Prensa" />
+                <Link href="/prensa" className="hover:text-navy-light">
+                  Prensa
+                </Link>
               </li>
               <li>
-                <ComingSoon label="Contacto" />
+                <Link href="/contacto" className="hover:text-navy-light">
+                  Contacto
+                </Link>
               </li>
             </ul>
           </div>

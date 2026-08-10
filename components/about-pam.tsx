@@ -1,11 +1,19 @@
 import Link from "next/link";
-import { PhotoPlaceholder } from "./photo-placeholder";
+import { EditorialPhoto } from "./editorial-photo";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
-export function AboutPam() {
+export async function AboutPam() {
+  const settings = await getSiteSettings();
+
   return (
     <section id="sobre-pam" className="border-t border-line bg-navy py-20 text-paper">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 lg:grid-cols-[0.85fr_1fr] lg:items-center">
-        <PhotoPlaceholder caption="Pam Guerrero" tone="warm" className="aspect-[4/5]" />
+        <EditorialPhoto
+          src={settings.founderImageUrl}
+          alt={settings.founderImageAlt ?? "Pam Guerrero"}
+          tone="warm"
+          className="aspect-[4/5]"
+        />
 
         <div>
           <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-paper/60">

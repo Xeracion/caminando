@@ -1,44 +1,22 @@
+import { cache } from "react";
 import type { Country } from "../types";
+import { client } from "../sanity/client";
+import { countriesQuery } from "../sanity/queries";
+import { seedCountries } from "./seed/countries";
 
-export const countries: Country[] = [
-  {
-    slug: "espana",
-    name: "España",
-    region: "Europa",
-    tagline: "El destino más buscado por hispanohablantes: mismo idioma, comunidad grande, puerta de entrada a la UE.",
-  },
-  {
-    slug: "alemania",
-    name: "Alemania",
-    region: "Europa",
-    tagline: "Economía fuerte y déficit de personal cualificado: becas de posgrado y trabajo con patrocinio de visa.",
-  },
-  {
-    slug: "canada",
-    name: "Canadá",
-    region: "Norteamérica",
-    tagline: "Rutas migratorias claras de estudio o trabajo hacia la residencia permanente.",
-  },
-  {
-    slug: "mexico",
-    name: "México",
-    region: "Norteamérica",
-    tagline: "Programas de posgrado con financiamiento público y creciente demanda de perfiles técnicos.",
-  },
-  {
-    slug: "chile",
-    name: "Chile",
-    region: "Sudamérica",
-    tagline: "Hub regional de trabajo remoto y tecnología dentro de Latinoamérica.",
-  },
-  {
-    slug: "portugal",
-    name: "Portugal",
-    region: "Europa",
-    tagline: "Visado D7 y comunidad latinoamericana en crecimiento — todavía estamos construyendo este hub.",
-  },
-];
+/**
+ * Cached per request — every call site (header, footer, cards, hubs) shares
+ * the same single fetch instead of hitting Sanity once per component.
+ * Falls back to the local seed list until Sanity is configured or has no
+ * countries published yet.
+ */
+export const getCountries = cache(async (): Promise<Country[]> => {
+  if (!client) return seedCountries;
+  const countries = await client.fetch<Country[]>(countriesQuery, {}, { next: { revalidate: 60 } });
+  return countries.length > 0 ? countries : seedCountries;
+});
 
-export function getCountry(slug: string): Country | undefined {
+export async function getCountry(slug: string): Promise<Country | undefined> {
+  const countries = await getCountries();
   return countries.find((c) => c.slug === slug);
 }

@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { countries } from "@/lib/data/countries";
+import { getCountries } from "@/lib/data/countries";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const countries = await getCountries();
+
   return (
     <footer className="border-t border-line bg-surface">
       <div className="mx-auto max-w-6xl px-6 py-16">

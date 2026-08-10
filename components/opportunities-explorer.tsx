@@ -36,6 +36,8 @@ export function OpportunitiesExplorer({
   const [visaOnly, setVisaOnly] = useState(false);
   const [remoteOnly, setRemoteOnly] = useState(false);
 
+  const countryBySlug = useMemo(() => new Map(countries.map((c) => [c.slug, c])), [countries]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return opportunities
@@ -165,6 +167,7 @@ export function OpportunitiesExplorer({
             <OpportunityCard
               key={o.slug}
               opportunity={o}
+              country={countryBySlug.get(o.countrySlug)}
               similar={!isActiveOrClosing(o) ? findSimilarActive(o, opportunities) : []}
             />
           ))}

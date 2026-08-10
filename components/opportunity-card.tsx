@@ -1,6 +1,5 @@
-import { CATEGORY_LABEL, type Opportunity } from "@/lib/types";
+import { CATEGORY_LABEL, type Country, type Opportunity } from "@/lib/types";
 import { getLifecycle } from "@/lib/lifecycle";
-import { getCountry } from "@/lib/data/countries";
 
 function LifecycleChip({ opportunity }: { opportunity: Opportunity }) {
   if (!opportunity.closingDate) {
@@ -36,12 +35,14 @@ function LifecycleChip({ opportunity }: { opportunity: Opportunity }) {
 
 export function OpportunityCard({
   opportunity,
+  country,
   similar = [],
 }: {
   opportunity: Opportunity;
+  /** Resolved by the caller (sync lookup) — keeps this component usable from the client-side explorer. */
+  country?: Country;
   similar?: Opportunity[];
 }) {
-  const country = getCountry(opportunity.countrySlug);
   const closed = opportunity.closingDate ? getLifecycle(opportunity.closingDate).status === "cerrada" : false;
 
   return (

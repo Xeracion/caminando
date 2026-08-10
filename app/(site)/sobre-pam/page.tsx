@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PhotoPlaceholder } from "@/components/photo-placeholder";
+import { EditorialPhoto } from "@/components/editorial-photo";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
 export const metadata: Metadata = {
   title: "Sobre Pam Guerrero",
@@ -23,11 +24,18 @@ const TIMELINE = [
   },
 ];
 
-export default function SobrePamPage() {
+export default async function SobrePamPage() {
+  const settings = await getSiteSettings();
+
   return (
     <main>
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 py-16 lg:grid-cols-[0.85fr_1fr] lg:items-start lg:py-24">
-        <PhotoPlaceholder caption="Pam Guerrero" tone="warm" className="aspect-[4/5]" />
+        <EditorialPhoto
+          src={settings.founderImageUrl}
+          alt={settings.founderImageAlt ?? "Pam Guerrero"}
+          tone="warm"
+          className="aspect-[4/5]"
+        />
 
         <div>
           <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">La fundadora</p>

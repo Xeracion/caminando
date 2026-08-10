@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { countries } from "@/lib/data/countries";
+import { getCountries } from "@/lib/data/countries";
 
 const CATEGORIES = [
   { href: "/becas", label: "Becas" },
@@ -13,7 +13,9 @@ const CATEGORIES = [
  * and the same data model that later stages will expand into a full
  * faceted search, so nothing here needs to be rebuilt as the catalog grows.
  */
-export function SearchBar() {
+export async function SearchBar() {
+  const countries = await getCountries();
+
   return (
     <div className="rounded-2xl border border-line bg-surface p-6 shadow-[0_24px_48px_-28px_rgba(15,42,74,0.35)] sm:p-8">
       <form action="/oportunidades" className="flex flex-col gap-3 sm:flex-row">

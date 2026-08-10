@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { StoryCard } from "@/components/story-card";
-import { stories } from "@/lib/data/stories";
+import { getStories } from "@/lib/data/stories";
 
 export const metadata: Metadata = {
   title: "Historias reales de latinoamericanos en el mundo",
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/historias" },
 };
 
-export default function HistoriasPage() {
+export default async function HistoriasPage() {
+  const stories = await getStories();
   const [first, ...rest] = stories;
 
   return (

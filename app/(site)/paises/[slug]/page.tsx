@@ -4,18 +4,19 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/page-header";
 import { OpportunityCard } from "@/components/opportunity-card";
 import { StoryCard } from "@/components/story-card";
-import { countries, getCountry } from "@/lib/data/countries";
+import { getCountries, getCountry } from "@/lib/data/countries";
 import { getOpportunitiesByCountry } from "@/lib/data/opportunities";
 import { getStoriesByCountry } from "@/lib/data/stories";
 import { CATEGORY_LABEL } from "@/lib/types";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const countries = await getCountries();
   return countries.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const country = getCountry(slug);
+  const country = await getCountry(slug);
   if (!country) return {};
   return {
     title: `Oportunidades en ${country.name} para latinoamericanos`,
@@ -33,12 +34,14 @@ const SUB_HUBS: { label: string; path?: string }[] = [
 
 export default async function CountryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const country = getCountry(slug);
+  const country = await getCountry(slug);
   if (!country) notFound();
 
-  const countryOpportunities = getOpportunitiesByCountry(country.slug);
+  const [countryOpportunities, countryStories] = await Promise.all([
+    getOpportunitiesByCountry(country.slug),
+    getStoriesByCountry(country.slug),
+  ]);
   const activeCount = countryOpportunities.length;
-  const countryStories = getStoriesByCountry(country.slug);
 
   return (
     <main>
@@ -103,7 +106,7 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
         ) : (
           <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {countryOpportunities.map((o) => (
-              <OpportunityCard key={o.slug} opportunity={o} />
+              <OpportunityCard key={o.slug} opportunity={o} country={country} />
             ))}
           </div>
         )}

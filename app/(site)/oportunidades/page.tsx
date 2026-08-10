@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { OpportunitiesExplorer } from "@/components/opportunities-explorer";
-import { opportunities } from "@/lib/data/opportunities";
-import { countries } from "@/lib/data/countries";
+import { getOpportunities } from "@/lib/data/opportunities";
+import { getCountries } from "@/lib/data/countries";
 
 export const metadata: Metadata = {
   title: "Oportunidades para latinoamericanos",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 type SearchParams = Promise<{ q?: string; categoria?: string; pais?: string }>;
 
 export default async function OportunidadesPage({ searchParams }: { searchParams: SearchParams }) {
-  const params = await searchParams;
+  const [params, opportunities, countries] = await Promise.all([searchParams, getOpportunities(), getCountries()]);
 
   return (
     <main>

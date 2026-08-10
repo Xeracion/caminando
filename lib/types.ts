@@ -37,6 +37,9 @@ export interface Opportunity {
   sourceTier: SourceTier;
 }
 
+/** Loosely typed Portable Text — avoids a hard dependency on Sanity's types in the app layer. */
+export type PortableTextBlock = { _type: string } & Record<string, unknown>;
+
 export interface Story {
   slug: string;
   headline: string;
@@ -45,6 +48,16 @@ export interface Story {
   originCountry: string;
   theme: string;
   readingMinutes: number;
+  imageUrl?: string;
+  imageAlt?: string;
+  body?: PortableTextBlock[];
+}
+
+export interface SiteSettings {
+  heroImageUrl?: string;
+  heroImageAlt?: string;
+  founderImageUrl?: string;
+  founderImageAlt?: string;
 }
 
 export const CATEGORY_LABEL: Record<OpportunityCategory, string> = {

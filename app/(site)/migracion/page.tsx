@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { OpportunityCard } from "@/components/opportunity-card";
-import { opportunities } from "@/lib/data/opportunities";
-import { getCountry } from "@/lib/data/countries";
+import { getOpportunities } from "@/lib/data/opportunities";
+import { getCountries, getCountry } from "@/lib/data/countries";
 import { ROUTE_LABEL, ROUTE_DESCRIPTION, type MigrationRoute } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -17,8 +17,9 @@ const ROUTES: MigrationRoute[] = ["estudio-residencia", "trabajo-residencia", "r
 type SearchParams = Promise<{ pais?: string }>;
 
 export default async function MigracionPage({ searchParams }: { searchParams: SearchParams }) {
-  const { pais } = await searchParams;
-  const country = pais ? getCountry(pais) : undefined;
+  const [{ pais }, opportunities, countries] = await Promise.all([searchParams, getOpportunities(), getCountries()]);
+  const country = pais ? await getCountry(pais) : undefined;
+  const countryBySlug = new Map(countries.map((c) => [c.slug, c]));
 
   const guides = opportunities.filter((o) => o.category === "migracion" && (country ? o.countrySlug === country.slug : true));
 
@@ -65,7 +66,7 @@ export default async function MigracionPage({ searchParams }: { searchParams: Se
 
                 <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   {routeGuides.map((g) => (
-                    <OpportunityCard key={g.slug} opportunity={g} />
+                    <OpportunityCard key={g.slug} opportunity={g} country={countryBySlug.get(g.countrySlug)} />
                   ))}
                 </div>
               </section>

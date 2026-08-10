@@ -1,9 +1,12 @@
 import type { MetadataRoute } from "next";
-import { countries } from "@/lib/data/countries";
+import { getCountries } from "@/lib/data/countries";
+import { getStories } from "@/lib/data/stories";
 
 const SITE_URL = "https://caminando.lat";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [countries, stories] = await Promise.all([getCountries(), getStories()]);
+
   const staticRoutes = [
     "",
     "/oportunidades",
@@ -26,5 +29,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...countryRoutes];
+  const storyRoutes = stories.map((s) => ({
+    url: `${SITE_URL}/historias/${s.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...countryRoutes, ...storyRoutes];
 }

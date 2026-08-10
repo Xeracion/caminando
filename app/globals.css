@@ -80,6 +80,49 @@ h4 {
   text-wrap: balance;
 }
 
+.prose-story {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-ink);
+}
+
+.prose-story > * + * {
+  margin-top: 1.4em;
+}
+
+.prose-story h2 {
+  font-size: 1.5rem;
+  margin-top: 2em;
+}
+
+.prose-story h3 {
+  font-size: 1.2rem;
+  margin-top: 1.8em;
+}
+
+.prose-story a {
+  color: var(--color-navy-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-story blockquote {
+  border-left: 3px solid var(--color-sun);
+  padding-left: 1.1em;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+.prose-story ul,
+.prose-story ol {
+  padding-left: 1.4em;
+}
+
+.prose-story li + li {
+  margin-top: 0.4em;
+}
+
 ::selection {
   background: var(--color-sun);
   color: var(--color-navy-deep);

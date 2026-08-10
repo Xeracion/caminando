@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { OpportunityCard } from "./opportunity-card";
-import { opportunities } from "@/lib/data/opportunities";
+import { getOpportunities } from "@/lib/data/opportunities";
+import { getCountries } from "@/lib/data/countries";
 import { getLifecycle } from "@/lib/lifecycle";
+import type { Opportunity } from "@/lib/types";
 
-function pickFeatured() {
+function pickFeatured(opportunities: Opportunity[]) {
   const withStatus = opportunities
     .filter((o) => o.category !== "migracion")
     .map((o) => ({ o, lc: o.closingDate ? getLifecycle(o.closingDate) : null }))
@@ -13,8 +15,10 @@ function pickFeatured() {
   return withStatus.slice(0, 5).map((x) => x.o);
 }
 
-export function FeaturedOpportunities() {
-  const featured = pickFeatured();
+export async function FeaturedOpportunities() {
+  const [opportunities, countries] = await Promise.all([getOpportunities(), getCountries()]);
+  const featured = pickFeatured(opportunities);
+  const countryBySlug = new Map(countries.map((c) => [c.slug, c]));
 
   return (
     <section className="border-t border-line bg-surface-2/60 py-20">
@@ -33,7 +37,7 @@ export function FeaturedOpportunities() {
 
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((o) => (
-            <OpportunityCard key={o.slug} opportunity={o} />
+            <OpportunityCard key={o.slug} opportunity={o} country={countryBySlug.get(o.countrySlug)} />
           ))}
         </div>
       </div>

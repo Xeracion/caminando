@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { StoryCard } from "./story-card";
-import { stories } from "@/lib/data/stories";
+import { getStories } from "@/lib/data/stories";
 
-export function StoriesSection() {
+export async function StoriesSection() {
+  const stories = await getStories();
   const [first, ...rest] = stories;
 
   return (

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
-import { opportunities } from "@/lib/data/opportunities";
-import { countries } from "@/lib/data/countries";
+import { getOpportunities } from "@/lib/data/opportunities";
+import { getCountries } from "@/lib/data/countries";
 import { isActiveOrClosing } from "@/lib/lifecycle";
 
 export const metadata: Metadata = {
@@ -14,7 +14,8 @@ const BOILERPLATE =
   "Caminando.lat es una plataforma editorial de oportunidades internacionales para latinoamericanos — becas, " +
   "trabajo y rutas de migración, explicadas por alguien que ya hizo el camino. Es un proyecto de Pam Guerrero.";
 
-export default function PrensaPage() {
+export default async function PrensaPage() {
+  const [opportunities, countries] = await Promise.all([getOpportunities(), getCountries()]);
   const activeCount = opportunities.filter((o) => isActiveOrClosing(o)).length;
 
   const facts = [

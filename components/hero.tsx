@@ -1,12 +1,20 @@
 import Link from "next/link";
-import { PhotoPlaceholder } from "./photo-placeholder";
+import { EditorialPhoto } from "./editorial-photo";
 import { SearchBar } from "./search-bar";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
-export function Hero() {
+export async function Hero() {
+  const settings = await getSiteSettings();
+
   return (
     <section className="relative">
       <div className="relative flex min-h-[78vh] items-end overflow-hidden sm:min-h-[86vh]">
-        <PhotoPlaceholder caption="Fotografía editorial — por definir" fill rounded={false} />
+        <EditorialPhoto
+          src={settings.heroImageUrl}
+          alt={settings.heroImageAlt ?? "Fotografía editorial — por definir"}
+          fill
+          rounded={false}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/25 to-transparent" />
 
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-32 sm:pb-28">

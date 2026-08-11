@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { StoryCard } from "@/components/story-card";
 import { getStories } from "@/lib/data/stories";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
 export const metadata: Metadata = {
   title: "Historias reales de latinoamericanos en el mundo",
@@ -10,15 +11,19 @@ export const metadata: Metadata = {
 };
 
 export default async function HistoriasPage() {
-  const stories = await getStories();
+  const [stories, settings] = await Promise.all([getStories(), getSiteSettings()]);
   const [first, ...rest] = stories;
+  const header = settings.historiasHeader;
 
   return (
     <main>
       <PageHeader
-        eyebrow="Historias"
-        title="Reportajes, no testimonios"
-        dek="Nada de citas de cliente satisfecho. Estas son las decisiones, los costos y los tropiezos reales detrás de cada mudanza."
+        eyebrow={header?.eyebrow || "Historias"}
+        title={header?.title || "Reportajes, no testimonios"}
+        dek={
+          header?.dek ||
+          "Nada de citas de cliente satisfecho. Estas son las decisiones, los costos y los tropiezos reales detrás de cada mudanza."
+        }
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">

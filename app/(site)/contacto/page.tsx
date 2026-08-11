@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -25,13 +26,19 @@ const ROUTES = [
   },
 ];
 
-export default function ContactoPage() {
+export default async function ContactoPage() {
+  const settings = await getSiteSettings();
+  const header = settings.contactoHeader;
+
   return (
     <main>
       <PageHeader
-        eyebrow="Contacto"
-        title="Escríbenos según lo que necesitas"
-        dek="Sin formulario genérico: cada motivo tiene su propio correo, para que tu mensaje llegue directo a quien puede responder."
+        eyebrow={header?.eyebrow || "Contacto"}
+        title={header?.title || "Escríbenos según lo que necesitas"}
+        dek={
+          header?.dek ||
+          "Sin formulario genérico: cada motivo tiene su propio correo, para que tu mensaje llegue directo a quien puede responder."
+        }
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { getCountries } from "@/lib/data/countries";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
 export async function SiteFooter() {
-  const countries = await getCountries();
+  const [countries, settings] = await Promise.all([getCountries(), getSiteSettings()]);
 
   return (
     <footer className="border-t border-line bg-surface">
@@ -88,7 +89,7 @@ export async function SiteFooter() {
         </div>
 
         <div className="mt-14 flex flex-col gap-2 border-t border-line pt-8 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>Un proyecto de Pam Guerrero</p>
+          <p>{settings.footerTagline || "Un proyecto de Pam Guerrero"}</p>
           <p>© {new Date().getFullYear()} Caminando.lat — Las oportunidades existen. Te ayudamos a encontrarlas.</p>
         </div>
       </div>

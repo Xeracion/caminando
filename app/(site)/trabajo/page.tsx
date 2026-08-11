@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { OpportunitiesExplorer } from "@/components/opportunities-explorer";
 import { getOpportunities } from "@/lib/data/opportunities";
 import { getCountries } from "@/lib/data/countries";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
 export const metadata: Metadata = {
   title: "Trabajo en el extranjero para latinoamericanos",
@@ -13,14 +14,23 @@ export const metadata: Metadata = {
 type SearchParams = Promise<{ pais?: string }>;
 
 export default async function TrabajoPage({ searchParams }: { searchParams: SearchParams }) {
-  const [params, opportunities, countries] = await Promise.all([searchParams, getOpportunities(), getCountries()]);
+  const [params, opportunities, countries, settings] = await Promise.all([
+    searchParams,
+    getOpportunities(),
+    getCountries(),
+    getSiteSettings(),
+  ]);
+  const header = settings.trabajoHeader;
 
   return (
     <main>
       <PageHeader
-        eyebrow="Oportunidades · Trabajo"
-        title="Trabajo para latinoamericanos"
-        dek="Dos caminos reales: un empleador que patrocina tu visa, o un puesto remoto que no te pide reubicarte. Filtra por el que te sirve."
+        eyebrow={header?.eyebrow || "Oportunidades · Trabajo"}
+        title={header?.title || "Trabajo para latinoamericanos"}
+        dek={
+          header?.dek ||
+          "Dos caminos reales: un empleador que patrocina tu visa, o un puesto remoto que no te pide reubicarte. Filtra por el que te sirve."
+        }
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">

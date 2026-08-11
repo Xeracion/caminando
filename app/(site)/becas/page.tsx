@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { OpportunitiesExplorer } from "@/components/opportunities-explorer";
 import { getOpportunities } from "@/lib/data/opportunities";
 import { getCountries } from "@/lib/data/countries";
+import { getSiteSettings } from "@/lib/data/site-settings";
 
 export const metadata: Metadata = {
   title: "Becas para estudiar en el extranjero",
@@ -28,14 +29,20 @@ const STEPS = [
 type SearchParams = Promise<{ pais?: string }>;
 
 export default async function BecasPage({ searchParams }: { searchParams: SearchParams }) {
-  const [params, opportunities, countries] = await Promise.all([searchParams, getOpportunities(), getCountries()]);
+  const [params, opportunities, countries, settings] = await Promise.all([
+    searchParams,
+    getOpportunities(),
+    getCountries(),
+    getSiteSettings(),
+  ]);
+  const header = settings.becasHeader;
 
   return (
     <main>
       <PageHeader
-        eyebrow="Oportunidades · Becas"
-        title="Becas para latinoamericanos"
-        dek="Pregrado, maestría y doctorado, financiados total o parcialmente. Filtra por nivel y país."
+        eyebrow={header?.eyebrow || "Oportunidades · Becas"}
+        title={header?.title || "Becas para latinoamericanos"}
+        dek={header?.dek || "Pregrado, maestría y doctorado, financiados total o parcialmente. Filtra por nivel y país."}
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">

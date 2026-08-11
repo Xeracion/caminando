@@ -55,6 +55,17 @@ export interface Story {
   body?: PortableTextBlock[];
 }
 
+export interface PageHeaderCopy {
+  eyebrow?: string;
+  title?: string;
+  dek?: string;
+}
+
+export interface TimelineEntry {
+  year: string;
+  text: string;
+}
+
 export interface SiteSettings {
   heroImageUrl?: string;
   heroImageAlt?: string;
@@ -62,6 +73,38 @@ export interface SiteSettings {
   founderImageUrl?: string;
   founderImageAlt?: string;
   founderImageDataAttribute?: string;
+
+  heroEyebrow?: string;
+  heroHeadline?: string;
+  heroSubheadline?: string;
+  heroCtaLabel?: string;
+
+  aboutTeaserEyebrow?: string;
+  aboutTeaserTitle?: string;
+  aboutTeaserBody1?: string;
+  aboutTeaserBody2?: string;
+  aboutTeaserLinkLabel?: string;
+
+  aboutPageEyebrow?: string;
+  aboutPageTitle?: string;
+  aboutPageIntro?: string;
+  aboutPageMission?: string;
+  aboutPageCtaLabel?: string;
+  timeline?: TimelineEntry[];
+  mentionsEmptyText?: string;
+
+  oportunidadesHeader?: PageHeaderCopy;
+  becasHeader?: PageHeaderCopy;
+  trabajoHeader?: PageHeaderCopy;
+  migracionHeader?: PageHeaderCopy;
+  historiasHeader?: PageHeaderCopy;
+  contactoHeader?: PageHeaderCopy;
+  prensaHeader?: PageHeaderCopy;
+
+  headerCtaLabel?: string;
+  newsletterTitle?: string;
+  newsletterBody?: string;
+  footerTagline?: string;
 }
 
 export const CATEGORY_LABEL: Record<OpportunityCategory, string> = {

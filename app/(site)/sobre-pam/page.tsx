@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/sobre-pam" },
 };
 
-const TIMELINE = [
+const DEFAULT_TIMELINE = [
   {
     year: "Antes",
     text: "Pam construye su propio camino fuera de Latinoamérica, sin mapa y sin la persona que hoy pregunta \"¿cómo le hiciste?\".",
@@ -26,6 +26,7 @@ const TIMELINE = [
 
 export default async function SobrePamPage() {
   const settings = await getSiteSettings();
+  const timeline = settings.timeline && settings.timeline.length > 0 ? settings.timeline : DEFAULT_TIMELINE;
 
   return (
     <main>
@@ -39,24 +40,32 @@ export default async function SobrePamPage() {
         />
 
         <div>
-          <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">La fundadora</p>
-          <h1 className="mt-4 text-4xl font-semibold leading-[1.08] sm:text-5xl">Sobre Pam Guerrero</h1>
+          <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">
+            {settings.aboutPageEyebrow || "La fundadora"}
+          </p>
+          <h1 className="mt-4 text-4xl font-semibold leading-[1.08] sm:text-5xl">
+            {settings.aboutPageTitle || "Sobre Pam Guerrero"}
+          </h1>
           <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-            Pam Guerrero construyó su propio camino fuera de Latinoamérica y descubrió, en el proceso, que la
-            información que más importa casi nunca está donde uno la busca primero. Caminando.lat existe para cerrar
-            esa distancia: convertir años de aprender a las malas en un lugar donde ese primer paso no dependa de
-            conocer a la persona correcta.
+            {settings.aboutPageIntro || (
+              <>
+                Pam Guerrero construyó su propio camino fuera de Latinoamérica y descubrió, en el proceso, que la
+                información que más importa casi nunca está donde uno la busca primero. Caminando.lat existe para
+                cerrar esa distancia: convertir años de aprender a las malas en un lugar donde ese primer paso no
+                dependa de conocer a la persona correcta.
+              </>
+            )}
           </p>
           <p className="mt-4 text-ink-muted">
-            La misión es simple: que ningún latinoamericano con talento se quede sin intentarlo por no saber que la
-            oportunidad ya existía.
+            {settings.aboutPageMission ||
+              "La misión es simple: que ningún latinoamericano con talento se quede sin intentarlo por no saber que la oportunidad ya existía."}
           </p>
 
           <Link
             href="/prensa"
             className="mt-8 inline-flex rounded-lg bg-sun px-5 py-2.5 font-body text-sm font-bold text-navy-deep"
           >
-            Kit de prensa
+            {settings.aboutPageCtaLabel || "Kit de prensa"}
           </Link>
         </div>
       </div>
@@ -65,7 +74,7 @@ export default async function SobrePamPage() {
         <div className="mx-auto max-w-3xl px-6">
           <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">El camino</p>
           <div className="mt-6 space-y-8">
-            {TIMELINE.map((t) => (
+            {timeline.map((t) => (
               <div key={t.year} className="flex gap-6">
                 <span className="w-24 shrink-0 font-data text-sm text-ink-muted">{t.year}</span>
                 <p className="text-ink">{t.text}</p>
@@ -78,8 +87,8 @@ export default async function SobrePamPage() {
       <div className="mx-auto max-w-3xl px-6 py-16 text-center">
         <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">Menciones en medios</p>
         <p className="mx-auto mt-4 max-w-md text-ink-muted">
-          Todavía no tenemos menciones que mostrar aquí — esta sección se llenará a medida que medios e instituciones
-          citen a Caminando.lat. Si eres periodista, el kit de prensa está siempre disponible.
+          {settings.mentionsEmptyText ||
+            "Todavía no tenemos menciones que mostrar aquí — esta sección se llenará a medida que medios e instituciones citen a Caminando.lat. Si eres periodista, el kit de prensa está siempre disponible."}
         </p>
       </div>
     </main>

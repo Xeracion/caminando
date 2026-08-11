@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/page-header";
 import { OpportunityCard } from "@/components/opportunity-card";
 import { getOpportunities } from "@/lib/data/opportunities";
 import { getCountries, getCountry } from "@/lib/data/countries";
+import { getSiteSettings } from "@/lib/data/site-settings";
 import { ROUTE_LABEL, ROUTE_DESCRIPTION, type MigrationRoute } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -17,18 +18,27 @@ const ROUTES: MigrationRoute[] = ["estudio-residencia", "trabajo-residencia", "r
 type SearchParams = Promise<{ pais?: string }>;
 
 export default async function MigracionPage({ searchParams }: { searchParams: SearchParams }) {
-  const [{ pais }, opportunities, countries] = await Promise.all([searchParams, getOpportunities(), getCountries()]);
+  const [{ pais }, opportunities, countries, settings] = await Promise.all([
+    searchParams,
+    getOpportunities(),
+    getCountries(),
+    getSiteSettings(),
+  ]);
   const country = pais ? await getCountry(pais) : undefined;
   const countryBySlug = new Map(countries.map((c) => [c.slug, c]));
+  const header = settings.migracionHeader;
 
   const guides = opportunities.filter((o) => o.category === "migracion" && (country ? o.countrySlug === country.slug : true));
 
   return (
     <main>
       <PageHeader
-        eyebrow="Oportunidades · Migración"
-        title="Rutas de migración, explicadas paso a paso"
-        dek="La migración casi nunca es una convocatoria con fecha de cierre — es una ruta. Organizamos nuestras guías por cómo se llega, no por cuándo cierra."
+        eyebrow={header?.eyebrow || "Oportunidades · Migración"}
+        title={header?.title || "Rutas de migración, explicadas paso a paso"}
+        dek={
+          header?.dek ||
+          "La migración casi nunca es una convocatoria con fecha de cierre — es una ruta. Organizamos nuestras guías por cómo se llega, no por cuándo cierra."
+        }
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">

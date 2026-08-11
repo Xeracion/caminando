@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 
-export function Newsletter() {
+export function Newsletter({ title, body }: { title?: string; body?: string }) {
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -12,8 +12,10 @@ export function Newsletter() {
 
   return (
     <section id="newsletter" className="mx-auto max-w-3xl px-6 py-24 text-center">
-      <h2 className="text-3xl font-semibold sm:text-4xl">Una oportunidad nueva cada semana, directo a tu correo.</h2>
-      <p className="mt-3 text-ink-muted">Sin spam, sin ruido. Puedes darte de baja cuando quieras.</p>
+      <h2 className="text-3xl font-semibold sm:text-4xl">
+        {title || "Una oportunidad nueva cada semana, directo a tu correo."}
+      </h2>
+      <p className="mt-3 text-ink-muted">{body || "Sin spam, sin ruido. Puedes darte de baja cuando quieras."}</p>
 
       {submitted ? (
         <p className="mx-auto mt-8 max-w-sm rounded-lg bg-surface-2 px-6 py-4 text-sm font-semibold text-ink">

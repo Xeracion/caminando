@@ -63,5 +63,37 @@ export const siteSettingsQuery = /* groq */ `
     "heroImageAlt": heroImage.alt,
     "founderImage": founderImage,
     "founderImageAlt": founderImage.alt,
+
+    heroEyebrow,
+    heroHeadline,
+    heroSubheadline,
+    heroCtaLabel,
+
+    aboutTeaserEyebrow,
+    aboutTeaserTitle,
+    aboutTeaserBody1,
+    aboutTeaserBody2,
+    aboutTeaserLinkLabel,
+
+    aboutPageEyebrow,
+    aboutPageTitle,
+    aboutPageIntro,
+    aboutPageMission,
+    aboutPageCtaLabel,
+    timeline,
+    mentionsEmptyText,
+
+    oportunidadesHeader,
+    becasHeader,
+    trabajoHeader,
+    migracionHeader,
+    historiasHeader,
+    contactoHeader,
+    prensaHeader,
+
+    headerCtaLabel,
+    newsletterTitle,
+    newsletterBody,
+    footerTagline,
   }
 `;

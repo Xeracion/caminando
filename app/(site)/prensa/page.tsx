@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { getOpportunities } from "@/lib/data/opportunities";
 import { getCountries } from "@/lib/data/countries";
+import { getSiteSettings } from "@/lib/data/site-settings";
 import { isActiveOrClosing } from "@/lib/lifecycle";
 
 export const metadata: Metadata = {
@@ -15,8 +16,9 @@ const BOILERPLATE =
   "trabajo y rutas de migración, explicadas por alguien que ya hizo el camino. Es un proyecto de Pam Guerrero.";
 
 export default async function PrensaPage() {
-  const [opportunities, countries] = await Promise.all([getOpportunities(), getCountries()]);
+  const [opportunities, countries, settings] = await Promise.all([getOpportunities(), getCountries(), getSiteSettings()]);
   const activeCount = opportunities.filter((o) => isActiveOrClosing(o)).length;
+  const header = settings.prensaHeader;
 
   const facts = [
     { label: "Oportunidades activas", value: String(activeCount) },
@@ -28,9 +30,9 @@ export default async function PrensaPage() {
   return (
     <main>
       <PageHeader
-        eyebrow="Prensa"
-        title="Kit de prensa"
-        dek="Todo lo que un medio necesita para citar a Caminando.lat como fuente, sin tener que pedirlo por correo."
+        eyebrow={header?.eyebrow || "Prensa"}
+        title={header?.title || "Kit de prensa"}
+        dek={header?.dek || "Todo lo que un medio necesita para citar a Caminando.lat como fuente, sin tener que pedirlo por correo."}
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">

@@ -8,8 +8,12 @@ import { seedOpportunities } from "./seed/opportunities";
 export const getOpportunities = cache(async (): Promise<Opportunity[]> => {
   const sanity = await getSanity();
   if (!sanity) return seedOpportunities;
-  const opportunities = await sanity.client.fetch<Opportunity[]>(opportunitiesQuery, {}, sanity.fetchOptions);
-  return opportunities.length > 0 ? opportunities : seedOpportunities;
+  try {
+    const opportunities = await sanity.client.fetch<Opportunity[]>(opportunitiesQuery, {}, sanity.fetchOptions);
+    return opportunities.length > 0 ? opportunities : seedOpportunities;
+  } catch {
+    return seedOpportunities;
+  }
 });
 
 export async function getOpportunity(slug: string): Promise<Opportunity | undefined> {

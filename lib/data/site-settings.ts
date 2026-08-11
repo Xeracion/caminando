@@ -23,15 +23,19 @@ type RawSiteSettings = {
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   const sanity = await getSanity();
   if (!sanity) return {};
-  const raw = await sanity.client.fetch<RawSiteSettings | null>(siteSettingsQuery, {}, sanity.fetchOptions);
-  if (!raw) return {};
-  const type = raw._type ?? "siteSettings";
-  return {
-    heroImageUrl: resolveImageUrl(raw.heroImage, 1800),
-    heroImageAlt: raw.heroImageAlt,
-    heroImageDataAttribute: imageDataAttribute(raw._id, type, "heroImage"),
-    founderImageUrl: resolveImageUrl(raw.founderImage, 900),
-    founderImageAlt: raw.founderImageAlt,
-    founderImageDataAttribute: imageDataAttribute(raw._id, type, "founderImage"),
-  };
+  try {
+    const raw = await sanity.client.fetch<RawSiteSettings | null>(siteSettingsQuery, {}, sanity.fetchOptions);
+    if (!raw) return {};
+    const type = raw._type ?? "siteSettings";
+    return {
+      heroImageUrl: resolveImageUrl(raw.heroImage, 1800),
+      heroImageAlt: raw.heroImageAlt,
+      heroImageDataAttribute: imageDataAttribute(raw._id, type, "heroImage"),
+      founderImageUrl: resolveImageUrl(raw.founderImage, 900),
+      founderImageAlt: raw.founderImageAlt,
+      founderImageDataAttribute: imageDataAttribute(raw._id, type, "founderImage"),
+    };
+  } catch {
+    return {};
+  }
 });

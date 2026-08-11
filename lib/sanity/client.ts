@@ -30,9 +30,19 @@ type FetchOptions = { next: { revalidate: number } } | { cache: "no-store" };
 export async function getSanity(): Promise<{ client: SanityClient; fetchOptions: FetchOptions } | null> {
   if (!client) return null;
 
-  const { isEnabled } = await draftMode();
+  const published = { client, fetchOptions: { next: { revalidate: 60 } } } as const;
+
+  // draftMode() throws when called from generateStaticParams, which runs at
+  // build time with no request/cookies to check — that's always the
+  // published case anyway, so fall back to it instead of failing the build.
+  let isEnabled = false;
+  try {
+    isEnabled = (await draftMode()).isEnabled;
+  } catch {
+    return published;
+  }
   if (!isEnabled) {
-    return { client, fetchOptions: { next: { revalidate: 60 } } };
+    return published;
   }
 
   return {

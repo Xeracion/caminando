@@ -25,8 +25,12 @@ function mapStory(raw: RawStory): Story {
 export const getStories = cache(async (): Promise<Story[]> => {
   const sanity = await getSanity();
   if (!sanity) return seedStories;
-  const raw = await sanity.client.fetch<RawStory[]>(storiesQuery, {}, sanity.fetchOptions);
-  return raw.length > 0 ? raw.map(mapStory) : seedStories;
+  try {
+    const raw = await sanity.client.fetch<RawStory[]>(storiesQuery, {}, sanity.fetchOptions);
+    return raw.length > 0 ? raw.map(mapStory) : seedStories;
+  } catch {
+    return seedStories;
+  }
 });
 
 export async function getStory(slug: string): Promise<Story | undefined> {

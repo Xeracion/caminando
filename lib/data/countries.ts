@@ -13,8 +13,13 @@ import { seedCountries } from "./seed/countries";
 export const getCountries = cache(async (): Promise<Country[]> => {
   const sanity = await getSanity();
   if (!sanity) return seedCountries;
-  const countries = await sanity.client.fetch<Country[]>(countriesQuery, {}, sanity.fetchOptions);
-  return countries.length > 0 ? countries : seedCountries;
+  try {
+    const countries = await sanity.client.fetch<Country[]>(countriesQuery, {}, sanity.fetchOptions);
+    return countries.length > 0 ? countries : seedCountries;
+  } catch {
+    // Sanity unreachable or misconfigured (wrong project ID, network down) — never break the site over it.
+    return seedCountries;
+  }
 });
 
 export async function getCountry(slug: string): Promise<Country | undefined> {

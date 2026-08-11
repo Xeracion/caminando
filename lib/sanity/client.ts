@@ -1,6 +1,8 @@
+import { draftMode } from "next/headers";
 import { createClient, type SanityClient } from "next-sanity";
 import { apiVersion, dataset, hasSanityConfig, projectId } from "./env";
 
+/** Base client, exported for the draft-mode API routes — everything else should use getSanity() below. */
 export const client: SanityClient | null = hasSanityConfig
   ? createClient({
       projectId,
@@ -13,3 +15,33 @@ export const client: SanityClient | null = hasSanityConfig
       perspective: "published",
     })
   : null;
+
+type FetchOptions = { next: { revalidate: number } } | { cache: "no-store" };
+
+/**
+ * Draft-mode-aware client + matching fetch options for the readers in
+ * lib/data/. Outside the Presentation tool's preview iframe this is just the
+ * cached, published-content client. Inside it, it switches to an uncached,
+ * token-authenticated read of draft content with stega-encoded strings —
+ * that's what lets clicking text or a photo on the actual page jump straight
+ * to the right field in /studio, and what keeps edits showing up instantly
+ * instead of waiting out the published cache window.
+ */
+export async function getSanity(): Promise<{ client: SanityClient; fetchOptions: FetchOptions } | null> {
+  if (!client) return null;
+
+  const { isEnabled } = await draftMode();
+  if (!isEnabled) {
+    return { client, fetchOptions: { next: { revalidate: 60 } } };
+  }
+
+  return {
+    client: client.withConfig({
+      token: process.env.SANITY_API_READ_TOKEN,
+      perspective: "drafts",
+      useCdn: false,
+      stega: { enabled: true, studioUrl: "/studio" },
+    }),
+    fetchOptions: { cache: "no-store" },
+  };
+}

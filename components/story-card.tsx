@@ -12,6 +12,7 @@ export async function StoryCard({ story, large = false }: { story: Story; large?
       <EditorialPhoto
         src={story.imageUrl}
         alt={story.imageAlt ?? destination}
+        dataAttribute={story.imageDataAttribute}
         tone="warm"
         className={large ? "aspect-[16/10]" : "aspect-[4/3]"}
       />

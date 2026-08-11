@@ -1,6 +1,6 @@
 import { cache } from "react";
 import type { Country } from "../types";
-import { client } from "../sanity/client";
+import { getSanity } from "../sanity/client";
 import { countriesQuery } from "../sanity/queries";
 import { seedCountries } from "./seed/countries";
 
@@ -11,8 +11,9 @@ import { seedCountries } from "./seed/countries";
  * countries published yet.
  */
 export const getCountries = cache(async (): Promise<Country[]> => {
-  if (!client) return seedCountries;
-  const countries = await client.fetch<Country[]>(countriesQuery, {}, { next: { revalidate: 60 } });
+  const sanity = await getSanity();
+  if (!sanity) return seedCountries;
+  const countries = await sanity.client.fetch<Country[]>(countriesQuery, {}, sanity.fetchOptions);
   return countries.length > 0 ? countries : seedCountries;
 });
 

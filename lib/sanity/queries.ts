@@ -35,6 +35,8 @@ export const opportunitiesQuery = /* groq */ `
 `;
 
 const storyProjection = /* groq */ `
+  _id,
+  _type,
   "slug": slug.current,
   headline,
   dek,
@@ -55,6 +57,8 @@ export const storiesQuery = /* groq */ `
 
 export const siteSettingsQuery = /* groq */ `
   *[_type == "siteSettings"][0] {
+    _id,
+    _type,
     "heroImage": heroImage,
     "heroImageAlt": heroImage.alt,
     "founderImage": founderImage,

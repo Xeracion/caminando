@@ -1,13 +1,14 @@
 import { cache } from "react";
 import type { Opportunity } from "../types";
-import { client } from "../sanity/client";
+import { getSanity } from "../sanity/client";
 import { opportunitiesQuery } from "../sanity/queries";
 import { seedOpportunities } from "./seed/opportunities";
 
 /** Cached per request — see lib/data/countries.ts for why. */
 export const getOpportunities = cache(async (): Promise<Opportunity[]> => {
-  if (!client) return seedOpportunities;
-  const opportunities = await client.fetch<Opportunity[]>(opportunitiesQuery, {}, { next: { revalidate: 60 } });
+  const sanity = await getSanity();
+  if (!sanity) return seedOpportunities;
+  const opportunities = await sanity.client.fetch<Opportunity[]>(opportunitiesQuery, {}, sanity.fetchOptions);
   return opportunities.length > 0 ? opportunities : seedOpportunities;
 });
 

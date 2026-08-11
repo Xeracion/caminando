@@ -62,6 +62,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         <EditorialPhoto
           src={story.imageUrl}
           alt={story.imageAlt ?? destination}
+          dataAttribute={story.imageDataAttribute}
           tone="warm"
           className="aspect-[16/9]"
         />

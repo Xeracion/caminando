@@ -33,6 +33,7 @@ export default async function SobrePamPage() {
         <EditorialPhoto
           src={settings.founderImageUrl}
           alt={settings.founderImageAlt ?? "Pam Guerrero"}
+          dataAttribute={settings.founderImageDataAttribute}
           tone="warm"
           className="aspect-[4/5]"
         />

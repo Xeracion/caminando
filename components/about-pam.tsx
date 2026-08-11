@@ -11,6 +11,7 @@ export async function AboutPam() {
         <EditorialPhoto
           src={settings.founderImageUrl}
           alt={settings.founderImageAlt ?? "Pam Guerrero"}
+          dataAttribute={settings.founderImageDataAttribute}
           tone="warm"
           className="aspect-[4/5]"
         />

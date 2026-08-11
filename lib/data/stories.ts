@@ -1,21 +1,31 @@
 import { cache } from "react";
 import type { SanityImageSource } from "@sanity/image-url";
 import type { Story } from "../types";
-import { client } from "../sanity/client";
+import { getSanity } from "../sanity/client";
 import { storiesQuery } from "../sanity/queries";
 import { resolveImageUrl } from "../sanity/image";
+import { imageDataAttribute } from "../sanity/data-attribute";
 import { seedStories } from "./seed/stories";
 
-type RawStory = Omit<Story, "imageUrl"> & { imageUrl?: SanityImageSource };
+type RawStory = Omit<Story, "imageUrl" | "imageDataAttribute"> & {
+  _id?: string;
+  _type?: string;
+  imageUrl?: SanityImageSource;
+};
 
 function mapStory(raw: RawStory): Story {
-  return { ...raw, imageUrl: resolveImageUrl(raw.imageUrl, 1200) };
+  return {
+    ...raw,
+    imageUrl: resolveImageUrl(raw.imageUrl, 1200),
+    imageDataAttribute: imageDataAttribute(raw._id, raw._type ?? "story", "image"),
+  };
 }
 
 /** Cached per request — see lib/data/countries.ts for why. */
 export const getStories = cache(async (): Promise<Story[]> => {
-  if (!client) return seedStories;
-  const raw = await client.fetch<RawStory[]>(storiesQuery, {}, { next: { revalidate: 60 } });
+  const sanity = await getSanity();
+  if (!sanity) return seedStories;
+  const raw = await sanity.client.fetch<RawStory[]>(storiesQuery, {}, sanity.fetchOptions);
   return raw.length > 0 ? raw.map(mapStory) : seedStories;
 });
 

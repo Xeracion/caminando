@@ -6,6 +6,7 @@ type Props = {
   /** True for full-bleed backgrounds (e.g. the hero); false sizes itself via `className`. */
   fill?: boolean;
   rounded?: boolean;
+  dataAttribute?: string;
 };
 
 /**
@@ -18,7 +19,14 @@ type Props = {
  * `absolute`) don't resolve by DOM order — the one that comes later in the
  * generated stylesheet wins regardless of which is listed last here.
  */
-export function PhotoPlaceholder({ caption, className = "", tone = "deep", fill = false, rounded = true }: Props) {
+export function PhotoPlaceholder({
+  caption,
+  className = "",
+  tone = "deep",
+  fill = false,
+  rounded = true,
+  dataAttribute,
+}: Props) {
   const gradient =
     tone === "deep"
       ? "from-navy-deep via-navy to-navy-light"
@@ -26,6 +34,7 @@ export function PhotoPlaceholder({ caption, className = "", tone = "deep", fill 
 
   return (
     <div
+      data-sanity={dataAttribute}
       className={`${fill ? "absolute inset-0" : "relative"} overflow-hidden ${rounded ? "rounded-2xl" : ""} bg-gradient-to-br ${gradient} ${className}`}
       role="img"
       aria-label={caption}

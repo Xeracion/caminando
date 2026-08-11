@@ -50,14 +50,18 @@ export interface Story {
   readingMinutes: number;
   imageUrl?: string;
   imageAlt?: string;
+  /** Opaque data-sanity attribute string — lets clicking the photo open /studio to this field. */
+  imageDataAttribute?: string;
   body?: PortableTextBlock[];
 }
 
 export interface SiteSettings {
   heroImageUrl?: string;
   heroImageAlt?: string;
+  heroImageDataAttribute?: string;
   founderImageUrl?: string;
   founderImageAlt?: string;
+  founderImageDataAttribute?: string;
 }
 
 export const CATEGORY_LABEL: Record<OpportunityCategory, string> = {

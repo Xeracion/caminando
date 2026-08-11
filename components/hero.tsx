@@ -12,6 +12,7 @@ export async function Hero() {
         <EditorialPhoto
           src={settings.heroImageUrl}
           alt={settings.heroImageAlt ?? "Fotografía editorial — por definir"}
+          dataAttribute={settings.heroImageDataAttribute}
           fill
           rounded={false}
         />

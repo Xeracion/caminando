@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import "../globals.css";
@@ -31,7 +33,9 @@ const THEME_INIT_SCRIPT = `
 })();
 `;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { isEnabled: isDraft } = await draftMode();
+
   return (
     // suppressHydrationWarning: the inline theme-init script below sets the
     // "dark" class before hydration based on client-only state (localStorage /
@@ -58,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         {children}
         <SiteFooter />
+        {isDraft ? <VisualEditing /> : null}
       </body>
     </html>
   );

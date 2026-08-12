@@ -66,7 +66,7 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="flex flex-wrap gap-2">
+        <div data-reveal className="flex flex-wrap gap-2">
           {SUB_HUBS.map((hub) =>
             hub.path ? (
               <Link
@@ -88,7 +88,7 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
         </div>
 
         {activeCount === 0 ? (
-          <div className="mt-10 rounded-2xl border border-dashed border-line-strong p-10 text-center">
+          <div data-reveal className="mt-10 rounded-2xl border border-dashed border-line-strong p-10 text-center">
             <p className="text-lg font-semibold">
               Aún no tenemos oportunidades publicadas en {country.name}.
             </p>
@@ -113,7 +113,7 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
 
         {countryStories.length > 0 ? (
           <div className="mt-16 border-t border-line pt-12">
-            <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">
+            <p data-reveal className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">
               Historias en {country.name}
             </p>
             <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">

@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import "../globals.css";
 
 const SITE_URL = "https://caminando.lat";
@@ -25,11 +26,19 @@ export const metadata: Metadata = {
 
 // Defaults to light regardless of the visitor's OS/browser preference — dark
 // mode only turns on if they explicitly pick it with the header toggle.
+// Also flags .reveal-js (see globals.css) so [data-reveal] elements only
+// start hidden when JS actually runs — skipped entirely for
+// prefers-reduced-motion, so those visitors never see the animation at all.
 const THEME_INIT_SCRIPT = `
 (function () {
   try {
     if (localStorage.getItem("caminando-theme") === "dark") {
       document.documentElement.classList.add("dark");
+    }
+  } catch (e) {}
+  try {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("reveal-js");
     }
   } catch (e) {}
 })();
@@ -64,6 +73,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SiteHeader />
         {children}
         <SiteFooter />
+        <ScrollReveal />
         {isDraft ? <VisualEditing /> : null}
       </body>
     </html>

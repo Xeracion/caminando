@@ -45,7 +45,7 @@ export async function QuickAccess() {
     <section className="mx-auto max-w-6xl px-6 py-20">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {ITEMS.map((item) => (
-          <Link key={item.title} href={item.href} className="group block">
+          <Link key={item.title} href={item.href} data-reveal className="group block">
             <PhotoPlaceholder caption={item.title} className="aspect-[4/5]" />
             <h3 className="mt-4 text-xl font-semibold">{item.title}</h3>
             <p className="mt-1.5 text-sm text-ink-muted">{item.copy}</p>

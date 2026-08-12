@@ -8,7 +8,7 @@ export async function StoryCard({ story, large = false }: { story: Story; large?
   const destination = `${story.originCountry} → ${country?.name ?? story.countrySlug}`;
 
   return (
-    <Link href={`/historias/${story.slug}`} className="group block">
+    <Link href={`/historias/${story.slug}`} data-reveal className="group block">
       <EditorialPhoto
         src={story.imageUrl}
         alt={story.imageAlt ?? destination}

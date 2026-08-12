@@ -37,21 +37,21 @@ export default async function PrensaPage() {
       />
 
       <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="max-w-2xl">
+        <div data-reveal className="max-w-2xl">
           <h2 className="text-xl font-semibold">Descripción oficial</h2>
           <p className="mt-3 text-ink-muted">{BOILERPLATE}</p>
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-6 border-y border-line py-10 sm:grid-cols-4">
           {facts.map((f) => (
-            <div key={f.label}>
+            <div key={f.label} data-reveal>
               <p className="font-data text-2xl font-semibold text-navy-light">{f.value}</p>
               <p className="mt-1 text-xs text-ink-muted">{f.label}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2">
+        <div data-reveal className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2">
           <div>
             <h2 className="text-xl font-semibold">Logotipo</h2>
             <p className="mt-2 text-sm text-ink-muted">
@@ -73,7 +73,7 @@ export default async function PrensaPage() {
           </div>
         </div>
 
-        <div className="mt-14 border-t border-line pt-10">
+        <div data-reveal className="mt-14 border-t border-line pt-10">
           <h2 className="text-xl font-semibold">Menciones</h2>
           <p className="mt-2 max-w-md text-sm text-ink-muted">
             Todavía no tenemos menciones publicadas que listar aquí. En cuanto un medio cite a Caminando.lat, el

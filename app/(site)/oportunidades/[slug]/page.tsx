@@ -77,7 +77,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
         <p className="mt-5 text-lg text-ink-muted">{opportunity.summary}</p>
       </div>
 
-      <div className="mx-auto max-w-3xl px-6 py-10">
+      <div data-reveal className="mx-auto max-w-3xl px-6 py-10">
         <dl className="grid grid-cols-1 gap-6 border-y border-line py-8 sm:grid-cols-2">
           {opportunity.level ? (
             <div>

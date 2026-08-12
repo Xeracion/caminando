@@ -11,7 +11,7 @@ export function Newsletter({ title, body }: { title?: string; body?: string }) {
   }
 
   return (
-    <section id="newsletter" className="mx-auto max-w-3xl px-6 py-24 text-center">
+    <section id="newsletter" data-reveal className="mx-auto max-w-3xl px-6 py-24 text-center">
       <h2 className="text-3xl font-semibold sm:text-4xl">
         {title || "Una oportunidad nueva cada semana, directo a tu correo."}
       </h2>

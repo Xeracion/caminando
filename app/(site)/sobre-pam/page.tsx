@@ -75,7 +75,7 @@ export default async function SobrePamPage() {
           <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">El camino</p>
           <div className="mt-6 space-y-8">
             {timeline.map((t) => (
-              <div key={t.year} className="flex gap-6">
+              <div key={t.year} data-reveal className="flex gap-6">
                 <span className="w-24 shrink-0 font-data text-sm text-ink-muted">{t.year}</span>
                 <p className="text-ink">{t.text}</p>
               </div>
@@ -84,7 +84,7 @@ export default async function SobrePamPage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-3xl px-6 py-16 text-center">
+      <div data-reveal className="mx-auto max-w-3xl px-6 py-16 text-center">
         <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">Menciones en medios</p>
         <p className="mx-auto mt-4 max-w-md text-ink-muted">
           {settings.mentionsEmptyText ||

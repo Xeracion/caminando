@@ -23,7 +23,7 @@ export async function FeaturedOpportunities() {
   return (
     <section className="border-t border-line bg-surface-2/60 py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div data-reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">
               Curadas por el equipo

@@ -58,7 +58,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         <p className="mt-5 text-lg text-ink-muted">{story.dek}</p>
       </div>
 
-      <div className="mx-auto max-w-5xl px-6">
+      <div data-reveal className="mx-auto max-w-5xl px-6">
         <EditorialPhoto
           src={story.imageUrl}
           alt={story.imageAlt ?? destination}
@@ -68,7 +68,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         />
       </div>
 
-      <div className="mx-auto max-w-3xl px-6 py-14">
+      <div data-reveal className="mx-auto max-w-3xl px-6 py-14">
         {story.body && story.body.length > 0 ? (
           <div className="prose-story">
             <PortableText value={story.body} />

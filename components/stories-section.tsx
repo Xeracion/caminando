@@ -8,7 +8,7 @@ export async function StoriesSection() {
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-20">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <div data-reveal className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-navy-light">Reportajes</p>
           <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Historias reales</h2>

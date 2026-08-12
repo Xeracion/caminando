@@ -48,7 +48,7 @@ export default async function BecasPage({ searchParams }: { searchParams: Search
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid grid-cols-1 gap-6 border-b border-line pb-14 sm:grid-cols-3">
           {STEPS.map((s, i) => (
-            <div key={s.title}>
+            <div key={s.title} data-reveal>
               <p className="font-data text-xs font-semibold text-navy-light">
                 {String(i + 1).padStart(2, "0")}
               </p>

@@ -53,7 +53,7 @@ export function OpportunityCard({
   const closed = opportunity.closingDate ? getLifecycle(opportunity.closingDate).status === "cerrada" : false;
 
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 sm:p-7">
+    <article data-reveal className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 sm:p-7">
       <div className="flex items-start justify-between gap-4">
         <p className="font-body text-xs font-bold uppercase tracking-[0.12em] text-navy-light">
           <Link href={CATEGORY_HUB_PATH[opportunity.category]} className="hover:underline">

@@ -123,6 +123,27 @@ h4 {
   margin-top: 0.4em;
 }
 
+/*
+ * Scroll reveal: elements marked data-reveal fade and rise in as they enter
+ * the viewport (see components/scroll-reveal.tsx). Hidden state only
+ * applies once .reveal-js lands on <html> (set synchronously in
+ * app/(site)/layout.tsx, before paint) — with JavaScript off or failing,
+ * elements simply render fully visible, never stuck invisible.
+ */
+.reveal-js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.reveal-js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal] {
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
 ::selection {
   background: var(--color-sun);
   color: var(--color-navy-deep);

@@ -69,7 +69,7 @@ export default async function MigracionPage({ searchParams }: { searchParams: Se
 
             return (
               <section key={route} className="border-b border-line py-12 first:pt-0 last:border-b-0">
-                <p className="font-body text-xs font-bold uppercase tracking-[0.12em] text-navy-light">
+                <p data-reveal className="font-body text-xs font-bold uppercase tracking-[0.12em] text-navy-light">
                   {ROUTE_LABEL[route]}
                 </p>
                 <p className="mt-2 max-w-xl text-sm text-ink-muted">{ROUTE_DESCRIPTION[route]}</p>

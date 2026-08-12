@@ -7,7 +7,7 @@ export async function AboutPam() {
 
   return (
     <section id="sobre-pam" className="border-t border-line bg-navy py-20 text-paper">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 lg:grid-cols-[0.85fr_1fr] lg:items-center">
+      <div data-reveal className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 lg:grid-cols-[0.85fr_1fr] lg:items-center">
         <EditorialPhoto
           src={settings.founderImageUrl}
           alt={settings.founderImageAlt ?? "Pam Guerrero"}

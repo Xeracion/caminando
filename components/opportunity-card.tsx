@@ -87,24 +87,12 @@ export function OpportunityCard({
         </div>
       </dl>
 
-      <div className="mt-5 flex flex-wrap items-center gap-3">
-        {!closed && opportunity.applicationUrl ? (
-          <a
-            href={opportunity.applicationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-sun px-4 py-2.5 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px"
-          >
-            {APPLY_LABEL[opportunity.category]} ↗
-          </a>
-        ) : null}
-        <Link
-          href={`/oportunidades/${opportunity.slug}`}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2.5 font-body text-sm font-semibold text-ink transition-colors hover:border-navy-light hover:text-navy-light"
-        >
-          Más información
-        </Link>
-      </div>
+      <Link
+        href={`/oportunidades/${opportunity.slug}`}
+        className="mt-5 inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2.5 font-body text-sm font-semibold text-ink transition-colors hover:border-navy-light hover:text-navy-light"
+      >
+        Más información
+      </Link>
 
       {closed && similar.length > 0 ? (
         <div className="mt-5 border-t border-line pt-4">

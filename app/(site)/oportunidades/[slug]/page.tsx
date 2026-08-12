@@ -5,9 +5,7 @@ import { LifecycleChip, APPLY_LABEL } from "@/components/opportunity-card";
 import { getOpportunities, getOpportunity } from "@/lib/data/opportunities";
 import { getCountry } from "@/lib/data/countries";
 import { findSimilarActive, isActiveOrClosing } from "@/lib/lifecycle";
-import { CATEGORY_LABEL, ROUTE_LABEL, ROUTE_DESCRIPTION } from "@/lib/types";
-
-const HUB_PATH = { beca: "/becas", trabajo: "/trabajo", migracion: "/migracion" } as const;
+import { CATEGORY_HUB_PATH, CATEGORY_LABEL, ROUTE_LABEL, ROUTE_DESCRIPTION } from "@/lib/types";
 
 export async function generateStaticParams() {
   const opportunities = await getOpportunities();
@@ -39,7 +37,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
   const country = await getCountry(opportunity.countrySlug);
   const closed = !isActiveOrClosing(opportunity);
   const similar = closed ? findSimilarActive(opportunity, opportunities) : [];
-  const hubPath = HUB_PATH[opportunity.category];
+  const hubPath = CATEGORY_HUB_PATH[opportunity.category];
 
   return (
     <main>

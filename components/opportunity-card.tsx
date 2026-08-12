@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CATEGORY_LABEL, type Country, type Opportunity, type OpportunityCategory } from "@/lib/types";
+import { CATEGORY_HUB_PATH, CATEGORY_LABEL, type Country, type Opportunity, type OpportunityCategory } from "@/lib/types";
 import { getLifecycle } from "@/lib/lifecycle";
 
 export const APPLY_LABEL: Record<OpportunityCategory, string> = {
@@ -53,10 +53,20 @@ export function OpportunityCard({
   const closed = opportunity.closingDate ? getLifecycle(opportunity.closingDate).status === "cerrada" : false;
 
   return (
-    <article className="rounded-2xl border border-line bg-surface p-6 sm:p-7">
+    <article className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 sm:p-7">
       <div className="flex items-start justify-between gap-4">
         <p className="font-body text-xs font-bold uppercase tracking-[0.12em] text-navy-light">
-          {CATEGORY_LABEL[opportunity.category]} · {country?.name ?? opportunity.countrySlug}
+          <Link href={CATEGORY_HUB_PATH[opportunity.category]} className="hover:underline">
+            {CATEGORY_LABEL[opportunity.category]}
+          </Link>{" "}
+          ·{" "}
+          {country ? (
+            <Link href={`/paises/${country.slug}`} className="hover:underline">
+              {country.name}
+            </Link>
+          ) : (
+            opportunity.countrySlug
+          )}
         </p>
         <LifecycleChip opportunity={opportunity} />
       </div>
@@ -66,33 +76,24 @@ export function OpportunityCard({
           {opportunity.title}
         </Link>
       </h3>
-      <p className="mt-2 text-[0.95rem] text-ink-muted">{opportunity.summary}</p>
+      <p className="mt-2 line-clamp-4 text-[0.95rem] text-ink-muted">{opportunity.summary}</p>
 
-      <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-ink-muted">
-        {opportunity.level ? (
-          <div className="flex gap-1.5">
-            <dt className="font-semibold text-ink">Nivel:</dt>
-            <dd>{opportunity.level}</dd>
-          </div>
-        ) : null}
-        {opportunity.fundingNote ? (
-          <div className="flex gap-1.5">
-            <dt className="font-semibold text-ink">Cubre:</dt>
-            <dd>{opportunity.fundingNote}</dd>
-          </div>
-        ) : null}
-        <div className="flex gap-1.5">
-          <dt className="font-semibold text-ink">Fuente:</dt>
-          <dd>{opportunity.sourceName}</dd>
-        </div>
-      </dl>
-
-      <Link
-        href={`/oportunidades/${opportunity.slug}`}
-        className="mt-5 inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2.5 font-body text-sm font-semibold text-ink transition-colors hover:border-navy-light hover:text-navy-light"
-      >
-        Más información
-      </Link>
+      {opportunity.level || opportunity.fundingNote ? (
+        <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-ink-muted">
+          {opportunity.level ? (
+            <div className="flex gap-1.5">
+              <dt className="font-semibold text-ink">Nivel:</dt>
+              <dd>{opportunity.level}</dd>
+            </div>
+          ) : null}
+          {opportunity.fundingNote ? (
+            <div className="flex gap-1.5">
+              <dt className="font-semibold text-ink">Cubre:</dt>
+              <dd>{opportunity.fundingNote}</dd>
+            </div>
+          ) : null}
+        </dl>
+      ) : null}
 
       {closed && similar.length > 0 ? (
         <div className="mt-5 border-t border-line pt-4">
@@ -110,6 +111,15 @@ export function OpportunityCard({
           </ul>
         </div>
       ) : null}
+
+      <div className="mt-auto pt-5">
+        <Link
+          href={`/oportunidades/${opportunity.slug}`}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2.5 font-body text-sm font-semibold text-ink transition-colors hover:border-navy-light hover:text-navy-light"
+        >
+          Más información
+        </Link>
+      </div>
     </article>
   );
 }

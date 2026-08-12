@@ -54,11 +54,12 @@ export const opportunity = defineType({
     defineField({
       name: "summary",
       title: "Resumen",
-      description: "2–3 frases. Es lo que se lee en la tarjeta, antes de cualquier detalle.",
+      description:
+        "Hasta 1500 caracteres. En la tarjeta se recorta a unas líneas, pero el texto completo se muestra siempre en la página de detalle de la oportunidad.",
       type: "text",
       group: "contenido",
-      rows: 3,
-      validation: (rule) => rule.required().max(320),
+      rows: 6,
+      validation: (rule) => rule.required().max(1500),
     }),
     defineField({
       name: "level",

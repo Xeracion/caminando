@@ -115,6 +115,12 @@ export const CATEGORY_LABEL: Record<OpportunityCategory, string> = {
   migracion: "Migración",
 };
 
+export const CATEGORY_HUB_PATH: Record<OpportunityCategory, string> = {
+  beca: "/becas",
+  trabajo: "/trabajo",
+  migracion: "/migracion",
+};
+
 export const ROUTE_LABEL: Record<MigrationRoute, string> = {
   "estudio-residencia": "De estudio a residencia",
   "trabajo-residencia": "De trabajo a residencia",

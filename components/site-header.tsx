@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
+import { Wordmark } from "./wordmark";
 import { getSiteSettings } from "@/lib/data/site-settings";
 
 const NAV = [
@@ -17,8 +18,8 @@ export async function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        <Link href="/" className="font-display text-lg font-semibold tracking-tight">
-          Caminando<span className="text-sun-deep">.</span>lat
+        <Link href="/">
+          <Wordmark className="text-lg" />
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex xl:gap-7">

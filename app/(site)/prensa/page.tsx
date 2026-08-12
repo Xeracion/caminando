@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
+import { Wordmark } from "@/components/wordmark";
 import { getOpportunities } from "@/lib/data/opportunities";
 import { getCountries } from "@/lib/data/countries";
 import { getSiteSettings } from "@/lib/data/site-settings";
@@ -55,8 +56,9 @@ export default async function PrensaPage() {
             <h2 className="text-xl font-semibold">Logotipo</h2>
             <p className="mt-2 text-sm text-ink-muted">
               El kit de logotipos descargables está en preparación. Mientras tanto, el wordmark oficial es{" "}
-              <span className="font-display font-semibold">Caminando.lat</span> — azul marino sobre blanco, o blanco
-              sobre azul marino. Escribe a prensa para recibir los archivos directamente.
+              <Wordmark className="text-base align-middle" /> — azul marino con &quot;.lat&quot; en naranja sobre
+              blanco, o blanco con &quot;.lat&quot; en naranja sobre azul marino. Escribe a prensa para recibir los
+              archivos directamente.
             </p>
           </div>
           <div>

@@ -77,6 +77,15 @@ export const opportunity = defineType({
       hidden: isMigracion,
     }),
     defineField({
+      name: "applicationUrl",
+      title: "Enlace para solicitar",
+      description:
+        "La página oficial donde se postula (o, en guías de migración, la fuente oficial). Si se deja vacío, la tarjeta no muestra botón.",
+      type: "url",
+      group: "contenido",
+      validation: (rule) => rule.uri({ scheme: ["http", "https"] }),
+    }),
+    defineField({
       name: "visaSponsorship",
       title: "Patrocina visa de trabajo",
       type: "boolean",

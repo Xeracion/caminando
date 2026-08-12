@@ -21,6 +21,8 @@ export interface Opportunity {
   summary: string;
   level?: string;
   fundingNote?: string;
+  /** Where to apply, or the official source for a migración guide. Card hides its button when absent. */
+  applicationUrl?: string;
   /**
    * ISO date (YYYY-MM-DD). Drives the lifecycle engine — never remove a closed
    * entry. Omit for evergreen "migracion" guides and use lastReviewed instead.

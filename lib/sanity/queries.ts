@@ -19,6 +19,7 @@ const opportunityProjection = /* groq */ `
   summary,
   level,
   fundingNote,
+  applicationUrl,
   closingDate,
   lastReviewed,
   visaSponsorship,

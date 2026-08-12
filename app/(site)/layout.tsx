@@ -23,12 +23,14 @@ export const metadata: Metadata = {
   },
 };
 
+// Defaults to light regardless of the visitor's OS/browser preference — dark
+// mode only turns on if they explicitly pick it with the header toggle.
 const THEME_INIT_SCRIPT = `
 (function () {
   try {
-    var stored = localStorage.getItem("caminando-theme");
-    var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if (dark) document.documentElement.classList.add("dark");
+    if (localStorage.getItem("caminando-theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
   } catch (e) {}
 })();
 `;

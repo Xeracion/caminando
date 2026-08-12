@@ -1,5 +1,11 @@
-import { CATEGORY_LABEL, type Country, type Opportunity } from "@/lib/types";
+import { CATEGORY_LABEL, type Country, type Opportunity, type OpportunityCategory } from "@/lib/types";
 import { getLifecycle } from "@/lib/lifecycle";
+
+const APPLY_LABEL: Record<OpportunityCategory, string> = {
+  beca: "Solicitar esta beca",
+  trabajo: "Postular a este empleo",
+  migracion: "Ver fuente oficial",
+};
 
 function LifecycleChip({ opportunity }: { opportunity: Opportunity }) {
   if (!opportunity.closingDate) {
@@ -75,6 +81,17 @@ export function OpportunityCard({
           <dd>{opportunity.sourceName}</dd>
         </div>
       </dl>
+
+      {!closed && opportunity.applicationUrl ? (
+        <a
+          href={opportunity.applicationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-sun px-4 py-2.5 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px"
+        >
+          {APPLY_LABEL[opportunity.category]} ↗
+        </a>
+      ) : null}
 
       {closed && similar.length > 0 ? (
         <div className="mt-5 border-t border-line pt-4">

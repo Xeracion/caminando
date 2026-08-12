@@ -1,13 +1,14 @@
+import Link from "next/link";
 import { CATEGORY_LABEL, type Country, type Opportunity, type OpportunityCategory } from "@/lib/types";
 import { getLifecycle } from "@/lib/lifecycle";
 
-const APPLY_LABEL: Record<OpportunityCategory, string> = {
+export const APPLY_LABEL: Record<OpportunityCategory, string> = {
   beca: "Solicitar esta beca",
   trabajo: "Postular a este empleo",
   migracion: "Ver fuente oficial",
 };
 
-function LifecycleChip({ opportunity }: { opportunity: Opportunity }) {
+export function LifecycleChip({ opportunity }: { opportunity: Opportunity }) {
   if (!opportunity.closingDate) {
     return (
       <span className="rounded-full border border-line-strong px-3 py-1 font-data text-xs text-ink-muted">
@@ -60,7 +61,11 @@ export function OpportunityCard({
         <LifecycleChip opportunity={opportunity} />
       </div>
 
-      <h3 className="mt-3 text-xl font-semibold leading-snug">{opportunity.title}</h3>
+      <h3 className="mt-3 text-xl font-semibold leading-snug">
+        <Link href={`/oportunidades/${opportunity.slug}`} className="hover:text-navy-light">
+          {opportunity.title}
+        </Link>
+      </h3>
       <p className="mt-2 text-[0.95rem] text-ink-muted">{opportunity.summary}</p>
 
       <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-ink-muted">
@@ -82,16 +87,24 @@ export function OpportunityCard({
         </div>
       </dl>
 
-      {!closed && opportunity.applicationUrl ? (
-        <a
-          href={opportunity.applicationUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-sun px-4 py-2.5 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px"
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        {!closed && opportunity.applicationUrl ? (
+          <a
+            href={opportunity.applicationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-sun px-4 py-2.5 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px"
+          >
+            {APPLY_LABEL[opportunity.category]} ↗
+          </a>
+        ) : null}
+        <Link
+          href={`/oportunidades/${opportunity.slug}`}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2.5 font-body text-sm font-semibold text-ink transition-colors hover:border-navy-light hover:text-navy-light"
         >
-          {APPLY_LABEL[opportunity.category]} ↗
-        </a>
-      ) : null}
+          Más información
+        </Link>
+      </div>
 
       {closed && similar.length > 0 ? (
         <div className="mt-5 border-t border-line pt-4">
@@ -100,8 +113,10 @@ export function OpportunityCard({
           </p>
           <ul className="mt-2 space-y-1">
             {similar.map((s) => (
-              <li key={s.slug} className="text-sm text-navy-light">
-                {s.title}
+              <li key={s.slug}>
+                <Link href={`/oportunidades/${s.slug}`} className="text-sm text-navy-light hover:underline">
+                  {s.title}
+                </Link>
               </li>
             ))}
           </ul>

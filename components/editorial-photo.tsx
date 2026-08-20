@@ -11,6 +11,8 @@ type Props = {
   sizes?: string;
   /** data-sanity attribute for Visual Editing — clicking the photo in /studio's preview jumps to this field. */
   dataAttribute?: string;
+  /** Set true only for the single LCP image on a page (e.g. the Home hero photo) — skips lazy-loading. */
+  priority?: boolean;
 };
 
 /**
@@ -27,6 +29,7 @@ export function EditorialPhoto({
   rounded = true,
   sizes = "100vw",
   dataAttribute,
+  priority = false,
 }: Props) {
   if (!src) {
     return (
@@ -46,7 +49,7 @@ export function EditorialPhoto({
       data-sanity={dataAttribute}
       className={`${fill ? "absolute inset-0" : "relative"} overflow-hidden ${rounded ? "rounded-2xl" : ""} ${className}`}
     >
-      <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+      <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
     </div>
   );
 }

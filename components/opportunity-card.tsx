@@ -28,7 +28,7 @@ export function LifecycleChip({ opportunity }: { opportunity: Opportunity }) {
   }
   if (status === "por-cerrar") {
     return (
-      <span className="rounded-full bg-navy px-3 py-1 font-data text-xs font-semibold text-paper">
+      <span className="rounded-full bg-urgent-bg px-3 py-1 font-data text-xs font-semibold text-urgent-text">
         {label}
       </span>
     );

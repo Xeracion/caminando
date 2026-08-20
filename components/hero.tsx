@@ -15,6 +15,7 @@ export async function Hero() {
           dataAttribute={settings.heroImageDataAttribute}
           fill
           rounded={false}
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/25 to-transparent" />
 

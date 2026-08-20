@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EditorialPhoto } from "@/components/editorial-photo";
+import { InstagramIcon } from "@/components/instagram-icon";
 import { getSiteSettings } from "@/lib/data/site-settings";
+import { PAM_GUERRERO_WEBSITE, PAM_GUERRERO_INSTAGRAM } from "@/lib/pam-guerrero";
+import { getAccessibleExternalLinkProps } from "@/lib/a11y";
 
 export const metadata: Metadata = {
   title: "Sobre Pam Guerrero",
@@ -61,12 +64,28 @@ export default async function SobrePamPage() {
               "La misión es simple: que ningún latinoamericano con talento se quede sin intentarlo por no saber que la oportunidad ya existía."}
           </p>
 
-          <Link
-            href="/prensa"
-            className="mt-8 inline-flex rounded-lg bg-sun px-5 py-2.5 font-body text-sm font-bold text-navy-deep"
-          >
-            {settings.aboutPageCtaLabel || "Kit de prensa"}
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link
+              href="/prensa"
+              className="inline-flex rounded-lg bg-sun px-5 py-2.5 font-body text-sm font-bold text-navy-deep"
+            >
+              {settings.aboutPageCtaLabel || "Kit de prensa"}
+            </Link>
+            <a
+              href={PAM_GUERRERO_WEBSITE}
+              {...getAccessibleExternalLinkProps("Ir a PamGuerrero.com")}
+              className="text-sm font-semibold text-navy-light hover:underline"
+            >
+              PamGuerrero.com
+            </a>
+            <a
+              href={PAM_GUERRERO_INSTAGRAM}
+              {...getAccessibleExternalLinkProps("Instagram de Pam Guerrero")}
+              className="text-ink-muted transition-colors hover:text-navy-light"
+            >
+              <InstagramIcon />
+            </a>
+          </div>
         </div>
       </div>
 

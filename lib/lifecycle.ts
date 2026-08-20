@@ -9,7 +9,7 @@ export interface LifecycleInfo {
 }
 
 const DAY_MS = 1000 * 60 * 60 * 24;
-const WARN_WINDOW_DAYS = 7;
+const WARN_WINDOW_DAYS = 20;
 
 /**
  * Single source of truth for the lifecycle engine described in the content
@@ -27,7 +27,7 @@ export function getLifecycle(closingDate: string, today: Date = new Date()): Lif
     return {
       status: "por-cerrar",
       daysLeft,
-      label: daysLeft === 0 ? "Cierra hoy" : `Cierra en ${daysLeft} día${daysLeft === 1 ? "" : "s"}`,
+      label: daysLeft === 0 ? "Cierra hoy" : daysLeft === 1 ? "Cierra mañana" : `Cierra en ${daysLeft} días`,
     };
   }
   return { status: "activa", daysLeft, label: `Cierra en ${daysLeft} días` };

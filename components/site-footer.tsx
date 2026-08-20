@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { getCountries } from "@/lib/data/countries";
 import { getSiteSettings } from "@/lib/data/site-settings";
+import { PAM_GUERRERO_WEBSITE, PAM_GUERRERO_INSTAGRAM } from "@/lib/pam-guerrero";
+import { getAccessibleExternalLinkProps } from "@/lib/a11y";
+import { InstagramIcon } from "./instagram-icon";
 
 export async function SiteFooter() {
   const [countries, settings] = await Promise.all([getCountries(), getSiteSettings()]);
@@ -88,8 +91,19 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-line pt-8 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>{settings.footerTagline || "Un proyecto de Pam Guerrero"}</p>
+        <div className="mt-14 flex flex-col gap-4 border-t border-line pt-8 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <a href={PAM_GUERRERO_WEBSITE} {...getAccessibleExternalLinkProps("Ir a PamGuerrero.com")} className="hover:text-navy-light">
+              {settings.footerTagline || "Un proyecto de Pam Guerrero"}
+            </a>
+            <a
+              href={PAM_GUERRERO_INSTAGRAM}
+              {...getAccessibleExternalLinkProps("Instagram de Pam Guerrero")}
+              className="text-ink-muted transition-colors hover:text-navy-light"
+            >
+              <InstagramIcon />
+            </a>
+          </div>
           <p>© {new Date().getFullYear()} Caminando.lat — Las oportunidades existen. Te ayudamos a encontrarlas.</p>
         </div>
       </div>

@@ -5,6 +5,8 @@ import { LifecycleChip, APPLY_LABEL } from "@/components/opportunity-card";
 import { getOpportunities, getOpportunity } from "@/lib/data/opportunities";
 import { getCountry } from "@/lib/data/countries";
 import { findSimilarActive, isActiveOrClosing } from "@/lib/lifecycle";
+import { formatClosingDate } from "@/lib/dates";
+import { getAccessibleExternalLinkProps } from "@/lib/a11y";
 import { CATEGORY_HUB_PATH, CATEGORY_LABEL, ROUTE_LABEL, ROUTE_DESCRIPTION } from "@/lib/types";
 
 export async function generateStaticParams() {
@@ -23,10 +25,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: opportunity.summary,
     alternates: { canonical: `/oportunidades/${opportunity.slug}` },
   };
-}
-
-function formatDate(iso: string) {
-  return new Date(`${iso}T00:00:00`).toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" });
 }
 
 export default async function OpportunityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -96,7 +94,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
               <dt className="font-body text-xs font-bold uppercase tracking-[0.1em] text-ink-muted">
                 Fecha de cierre
               </dt>
-              <dd className="mt-1.5 text-ink">{formatDate(opportunity.closingDate)}</dd>
+              <dd className="mt-1.5 text-ink">{formatClosingDate(opportunity.closingDate)}</dd>
             </div>
           ) : null}
           {opportunity.lastReviewed ? (
@@ -104,7 +102,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
               <dt className="font-body text-xs font-bold uppercase tracking-[0.1em] text-ink-muted">
                 Última revisión editorial
               </dt>
-              <dd className="mt-1.5 text-ink">{formatDate(opportunity.lastReviewed)}</dd>
+              <dd className="mt-1.5 text-ink">{formatClosingDate(opportunity.lastReviewed)}</dd>
             </div>
           ) : null}
           {opportunity.route ? (
@@ -125,8 +123,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
         {!closed && opportunity.applicationUrl ? (
           <a
             href={opportunity.applicationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            {...getAccessibleExternalLinkProps(`${APPLY_LABEL[opportunity.category]} (se abre en una pestaña nueva)`)}
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-sun px-6 py-3.5 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px"
           >
             {APPLY_LABEL[opportunity.category]} ↗

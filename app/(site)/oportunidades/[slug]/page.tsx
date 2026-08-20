@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { toPlainText } from "@portabletext/react";
 import { LifecycleChip, APPLY_LABEL } from "@/components/opportunity-card";
+import { RichSummary } from "@/components/rich-summary";
 import { getOpportunities, getOpportunity } from "@/lib/data/opportunities";
 import { getCountry } from "@/lib/data/countries";
 import { findSimilarActive, isActiveOrClosing } from "@/lib/lifecycle";
@@ -22,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const country = await getCountry(opportunity.countrySlug);
   return {
     title: `${opportunity.title} — ${CATEGORY_LABEL[opportunity.category]} en ${country?.name ?? opportunity.countrySlug}`,
-    description: opportunity.summary,
+    description: toPlainText(opportunity.summary),
     alternates: { canonical: `/oportunidades/${opportunity.slug}` },
   };
 }
@@ -46,7 +48,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
             "@context": "https://schema.org",
             "@type": "Article",
             headline: opportunity.title,
-            description: opportunity.summary,
+            description: toPlainText(opportunity.summary),
             articleSection: CATEGORY_LABEL[opportunity.category],
           }),
         }}
@@ -72,7 +74,7 @@ export default async function OpportunityPage({ params }: { params: Promise<{ sl
         </div>
 
         <h1 className="mt-3 text-3xl font-semibold leading-[1.15] sm:text-4xl">{opportunity.title}</h1>
-        <p className="mt-5 text-lg text-ink-muted">{opportunity.summary}</p>
+        <RichSummary value={opportunity.summary} className="mt-5 text-lg text-ink-muted" />
       </div>
 
       <div data-reveal className="mx-auto max-w-3xl px-6 py-10">

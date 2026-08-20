@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { toPlainText } from "@portabletext/react";
 import { OpportunityCard } from "./opportunity-card";
 import { CATEGORY_LABEL, type Opportunity, type OpportunityCategory, type Country } from "@/lib/types";
 import { findSimilarActive, isActiveOrClosing } from "@/lib/lifecycle";
@@ -47,7 +48,7 @@ export function OpportunitiesExplorer({
       .filter((o) => (level ? (o.level ?? "").toLowerCase().includes(level.toLowerCase()) : true))
       .filter((o) => (visaOnly ? o.visaSponsorship : true))
       .filter((o) => (remoteOnly ? o.remote : true))
-      .filter((o) => (q ? `${o.title} ${o.summary}`.toLowerCase().includes(q) : true))
+      .filter((o) => (q ? `${o.title} ${toPlainText(o.summary)}`.toLowerCase().includes(q) : true))
       .sort((a, b) => Number(isActiveOrClosing(b)) - Number(isActiveOrClosing(a)));
   }, [opportunities, category, country, showClosed, level, visaOnly, remoteOnly, query]);
 

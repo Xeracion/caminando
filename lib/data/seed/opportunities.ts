@@ -1,4 +1,5 @@
 import type { Opportunity } from "../../types";
+import { plainTextToBlocks } from "../../portable-text";
 
 /**
  * Fallback content used until NEXT_PUBLIC_SANITY_PROJECT_ID is set — see
@@ -6,7 +7,7 @@ import type { Opportunity } from "../../types";
  * honestly: activa, por-cerrar and cerrada. Institution names are kept
  * generic — these are illustrative entries, not verified live listings.
  */
-export const seedOpportunities: Opportunity[] = [
+const rawSeedOpportunities: (Omit<Opportunity, "summary"> & { summary: string })[] = [
   {
     slug: "espana-beca-excelencia-ingenieria-maestria",
     category: "beca",
@@ -177,3 +178,8 @@ export const seedOpportunities: Opportunity[] = [
     sourceTier: "A",
   },
 ];
+
+export const seedOpportunities: Opportunity[] = rawSeedOpportunities.map((o) => ({
+  ...o,
+  summary: plainTextToBlocks(o.summary),
+}));

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CATEGORY_HUB_PATH, CATEGORY_LABEL, type Country, type Opportunity, type OpportunityCategory } from "@/lib/types";
 import { getLifecycle } from "@/lib/lifecycle";
+import { RichSummary } from "./rich-summary";
 
 export const APPLY_LABEL: Record<OpportunityCategory, string> = {
   beca: "Solicitar esta beca",
@@ -76,7 +77,7 @@ export function OpportunityCard({
           {opportunity.title}
         </Link>
       </h3>
-      <p className="mt-2 line-clamp-4 text-[0.95rem] text-ink-muted">{opportunity.summary}</p>
+      <RichSummary value={opportunity.summary} className="mt-2 line-clamp-4 text-[0.95rem] text-ink-muted" />
 
       {opportunity.level || opportunity.fundingNote ? (
         <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-xs text-ink-muted">

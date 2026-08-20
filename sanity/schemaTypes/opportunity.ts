@@ -55,11 +55,34 @@ export const opportunity = defineType({
       name: "summary",
       title: "Resumen",
       description:
-        "Hasta 1500 caracteres. En la tarjeta se recorta a unas líneas, pero el texto completo se muestra siempre en la página de detalle de la oportunidad.",
-      type: "text",
+        "Hasta 1500 caracteres. Admite negrita, párrafos justificados y listas — pega el texto ya formateado y se conserva. En la tarjeta se recorta a unas líneas, pero el texto completo se muestra siempre en la página de detalle de la oportunidad.",
+      type: "array",
       group: "contenido",
-      rows: 6,
-      validation: (rule) => rule.required().max(1500),
+      of: [
+        {
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Justificado", value: "justify" },
+          ],
+          lists: [
+            { title: "Viñetas", value: "bullet" },
+            { title: "Numerada", value: "number" },
+          ],
+          marks: {
+            decorators: [{ title: "Negrita", value: "strong" }],
+            annotations: [],
+          },
+        },
+      ],
+      validation: (rule) =>
+        rule.required().custom((value) => {
+          const blocks = (value ?? []) as { _type: string; children?: { text?: string }[] }[];
+          const length = blocks
+            .map((block) => (block._type === "block" ? (block.children ?? []).map((c) => c.text ?? "").join("") : ""))
+            .join("\n").length;
+          return length <= 1500 ? true : "Máximo 1500 caracteres.";
+        }),
     }),
     defineField({
       name: "level",

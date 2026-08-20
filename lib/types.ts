@@ -13,12 +13,16 @@ export interface Country {
   tagline: string;
 }
 
+/** Loosely typed Portable Text — avoids a hard dependency on Sanity's types in the app layer. */
+export type PortableTextBlock = { _type: string } & Record<string, unknown>;
+
 export interface Opportunity {
   slug: string;
   category: OpportunityCategory;
   countrySlug: string;
   title: string;
-  summary: string;
+  /** Rich text — supports bold, bullet/numbered lists and a justified paragraph style. */
+  summary: PortableTextBlock[];
   level?: string;
   fundingNote?: string;
   /** Where to apply, or the official source for a migración guide. Card hides its button when absent. */
@@ -38,9 +42,6 @@ export interface Opportunity {
   sourceName: string;
   sourceTier: SourceTier;
 }
-
-/** Loosely typed Portable Text — avoids a hard dependency on Sanity's types in the app layer. */
-export type PortableTextBlock = { _type: string } & Record<string, unknown>;
 
 export interface Story {
   slug: string;

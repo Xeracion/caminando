@@ -1,8 +1,7 @@
 /**
  * The "Caminando.lat" logotype — a bold sans wordmark with ".lat" in the
  * brand accent, recreated in CSS rather than a raster file so it stays
- * crisp at any size and inverts between light/dark automatically (the
- * "Caminando" part inherits `--color-ink`, which already flips per theme).
+ * crisp at any size.
  */
 export function Wordmark({ className = "" }: { className?: string }) {
   return (

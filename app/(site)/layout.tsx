@@ -24,18 +24,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Defaults to light regardless of the visitor's OS/browser preference — dark
-// mode only turns on if they explicitly pick it with the header toggle.
-// Also flags .reveal-js (see globals.css) so [data-reveal] elements only
-// start hidden when JS actually runs — skipped entirely for
-// prefers-reduced-motion, so those visitors never see the animation at all.
+// Flags .reveal-js (see globals.css) so [data-reveal] elements only start
+// hidden when JS actually runs — skipped entirely for prefers-reduced-motion,
+// so those visitors never see the animation at all.
 const THEME_INIT_SCRIPT = `
 (function () {
-  try {
-    if (localStorage.getItem("caminando-theme") === "dark") {
-      document.documentElement.classList.add("dark");
-    }
-  } catch (e) {}
   try {
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       document.documentElement.classList.add("reveal-js");
@@ -48,10 +41,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled: isDraft } = await draftMode();
 
   return (
-    // suppressHydrationWarning: the inline theme-init script below sets the
-    // "dark" class before hydration based on client-only state (localStorage /
-    // matchMedia), so the server-rendered class attribute intentionally
-    // differs from the client's first paint.
+    // suppressHydrationWarning: the inline script below adds "reveal-js"
+    // before hydration based on client-only state (matchMedia), so the
+    // server-rendered class attribute intentionally differs from the
+    // client's first paint.
     <html lang="es" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

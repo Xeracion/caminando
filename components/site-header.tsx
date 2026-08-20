@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
+import { MobileNav } from "./mobile-nav";
 import { Wordmark } from "./wordmark";
 import { getSiteSettings } from "@/lib/data/site-settings";
 
@@ -14,10 +14,11 @@ const NAV = [
 
 export async function SiteHeader() {
   const settings = await getSiteSettings();
+  const ctaLabel = settings.headerCtaLabel || "Buscar oportunidades";
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
         <Link href="/">
           <Wordmark className="text-lg" />
         </Link>
@@ -34,15 +35,14 @@ export async function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <Link
-            href="/oportunidades"
-            className="hidden rounded-lg bg-sun px-4 py-2 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px sm:inline-block"
-          >
-            {settings.headerCtaLabel || "Buscar oportunidades"}
-          </Link>
-        </div>
+        <Link
+          href="/oportunidades"
+          className="hidden rounded-lg bg-sun px-4 py-2 font-body text-sm font-bold text-navy-deep transition-transform hover:-translate-y-px lg:inline-block"
+        >
+          {ctaLabel}
+        </Link>
+
+        <MobileNav navItems={NAV} ctaLabel={ctaLabel} />
       </div>
     </header>
   );

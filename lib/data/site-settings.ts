@@ -6,13 +6,29 @@ import { siteSettingsQuery } from "../sanity/queries";
 import { resolveImageUrl } from "../sanity/image";
 import { imageDataAttribute } from "../sanity/data-attribute";
 
-type ImageFields = "heroImageUrl" | "heroImageDataAttribute" | "founderImageUrl" | "founderImageDataAttribute";
+type ImageFields =
+  | "heroImageUrl"
+  | "heroImageDataAttribute"
+  | "founderImageUrl"
+  | "founderImageDataAttribute"
+  | "quickAccessEstudiarImageUrl"
+  | "quickAccessEstudiarImageDataAttribute"
+  | "quickAccessTrabajarImageUrl"
+  | "quickAccessTrabajarImageDataAttribute"
+  | "quickAccessMigrarImageUrl"
+  | "quickAccessMigrarImageDataAttribute"
+  | "quickAccessHistoriasImageUrl"
+  | "quickAccessHistoriasImageDataAttribute";
 
 type RawSiteSettings = Omit<SiteSettings, ImageFields> & {
   _id?: string;
   _type?: string;
   heroImage?: SanityImageSource;
   founderImage?: SanityImageSource;
+  quickAccessEstudiarImage?: SanityImageSource;
+  quickAccessTrabajarImage?: SanityImageSource;
+  quickAccessMigrarImage?: SanityImageSource;
+  quickAccessHistoriasImage?: SanityImageSource;
 };
 
 /**
@@ -34,6 +50,14 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
       heroImageDataAttribute: imageDataAttribute(raw._id, type, "heroImage"),
       founderImageUrl: resolveImageUrl(raw.founderImage, 900),
       founderImageDataAttribute: imageDataAttribute(raw._id, type, "founderImage"),
+      quickAccessEstudiarImageUrl: resolveImageUrl(raw.quickAccessEstudiarImage, 900),
+      quickAccessEstudiarImageDataAttribute: imageDataAttribute(raw._id, type, "quickAccessEstudiarImage"),
+      quickAccessTrabajarImageUrl: resolveImageUrl(raw.quickAccessTrabajarImage, 900),
+      quickAccessTrabajarImageDataAttribute: imageDataAttribute(raw._id, type, "quickAccessTrabajarImage"),
+      quickAccessMigrarImageUrl: resolveImageUrl(raw.quickAccessMigrarImage, 900),
+      quickAccessMigrarImageDataAttribute: imageDataAttribute(raw._id, type, "quickAccessMigrarImage"),
+      quickAccessHistoriasImageUrl: resolveImageUrl(raw.quickAccessHistoriasImage, 900),
+      quickAccessHistoriasImageDataAttribute: imageDataAttribute(raw._id, type, "quickAccessHistoriasImage"),
     };
   } catch {
     return {};

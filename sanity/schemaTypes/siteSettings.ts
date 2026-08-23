@@ -67,6 +67,50 @@ export const siteSettings = defineType({
         defineField({ name: "alt", title: "Texto alternativo", type: "string", validation: (rule) => rule.required() }),
       ],
     }),
+    defineField({
+      name: "quickAccessEstudiarImage",
+      title: "Foto de la tarjeta \"Estudiar\" (Home)",
+      description: "La tarjeta de acceso rápido a Becas, en la portada.",
+      type: "image",
+      group: "fotos",
+      options: { hotspot: true },
+      fields: [
+        defineField({ name: "alt", title: "Texto alternativo", type: "string", validation: (rule) => rule.required() }),
+      ],
+    }),
+    defineField({
+      name: "quickAccessTrabajarImage",
+      title: "Foto de la tarjeta \"Trabajar\" (Home)",
+      description: "La tarjeta de acceso rápido a Trabajo, en la portada.",
+      type: "image",
+      group: "fotos",
+      options: { hotspot: true },
+      fields: [
+        defineField({ name: "alt", title: "Texto alternativo", type: "string", validation: (rule) => rule.required() }),
+      ],
+    }),
+    defineField({
+      name: "quickAccessMigrarImage",
+      title: "Foto de la tarjeta \"Migrar\" (Home)",
+      description: "La tarjeta de acceso rápido a Migración, en la portada.",
+      type: "image",
+      group: "fotos",
+      options: { hotspot: true },
+      fields: [
+        defineField({ name: "alt", title: "Texto alternativo", type: "string", validation: (rule) => rule.required() }),
+      ],
+    }),
+    defineField({
+      name: "quickAccessHistoriasImage",
+      title: "Foto de la tarjeta \"Historias\" (Home)",
+      description: "La tarjeta de acceso rápido a Historias, en la portada.",
+      type: "image",
+      group: "fotos",
+      options: { hotspot: true },
+      fields: [
+        defineField({ name: "alt", title: "Texto alternativo", type: "string", validation: (rule) => rule.required() }),
+      ],
+    }),
 
     // — Inicio: Hero —
     defineField({

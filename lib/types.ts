@@ -76,6 +76,18 @@ export interface SiteSettings {
   founderImageUrl?: string;
   founderImageAlt?: string;
   founderImageDataAttribute?: string;
+  quickAccessEstudiarImageUrl?: string;
+  quickAccessEstudiarImageAlt?: string;
+  quickAccessEstudiarImageDataAttribute?: string;
+  quickAccessTrabajarImageUrl?: string;
+  quickAccessTrabajarImageAlt?: string;
+  quickAccessTrabajarImageDataAttribute?: string;
+  quickAccessMigrarImageUrl?: string;
+  quickAccessMigrarImageAlt?: string;
+  quickAccessMigrarImageDataAttribute?: string;
+  quickAccessHistoriasImageUrl?: string;
+  quickAccessHistoriasImageAlt?: string;
+  quickAccessHistoriasImageDataAttribute?: string;
 
   heroEyebrow?: string;
   heroHeadline?: string;
